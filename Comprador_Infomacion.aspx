@@ -39,6 +39,7 @@
  }
 
  /* Menú lateral */
+ /*dairmary okvamprio*/
  .menu-lateral {
      width: 140px;
      background-color: #F5F5F5;
@@ -142,7 +143,7 @@
             margin-top: 20px;
             font-size: 18px;
         }
-
+        
         .filtro select {
             height: 28px;
             width: 220px;
