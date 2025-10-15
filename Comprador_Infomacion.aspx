@@ -41,6 +41,7 @@
  /* Menú lateral */
  /*dairmary okvamprio*/
  /*zorrilla*/
+ /*HOLI*/
  .menu-lateral {
      width: 140px;
      background-color: #F5F5F5;
