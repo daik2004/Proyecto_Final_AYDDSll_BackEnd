@@ -9,10 +9,6 @@ namespace Proyecto_Final_Diseño_
 {
     public partial class Jefe_Inicio : System.Web.UI.Page
     {
-        protected void Page_Load(object sender, EventArgs e)
-        {
-
-        }
 
         protected void ImageButton2_Click(object sender, ImageClickEventArgs e)
         {
@@ -34,9 +30,9 @@ namespace Proyecto_Final_Diseño_
             Response.Redirect("Informacion_Jefe.aspx");
         }
 
-        protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
+        protected void ImageButton2_Click1(object sender, ImageClickEventArgs e)
         {
-
+            Response.Redirect("Login.aspx");
         }
     }
 }

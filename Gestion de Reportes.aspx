@@ -1,8 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Gestion de Reportes.aspx.cs" Inherits="Proyecto_Final_Diseño_.Gestion_de_Reportes" %>
 
 
-
-
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
@@ -40,31 +38,6 @@
             overflow: hidden;
         }
 
-        /* Menú lateral */
-        .menu-lateral {
-            width: 140px;
-            background-color: #F5F5F5;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 10px;
-            border-right: 1px solid #ccc;
-        }
-
-        .menu-lateral asp\:ImageButton {
-            width: 90%;
-            margin-bottom: 20px;
-            border-radius: 12px;
-            background-color: white;
-            padding: 5px;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .menu-lateral asp\:ImageButton:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
 
         /* Contenido principal */
         .contenido {
@@ -165,11 +138,7 @@
 
         <!-- Contenedor principal -->
         <div class="contenedor">
-            <!-- Menú lateral -->
-            <div class="menu-lateral">
-                <asp:ImageButton ID="ImageButton1" runat="server" Height="47px" Width="100%" ImageUrl="~/imagenes/fotos/Solicitudes.png" />
-                <asp:ImageButton ID="ImageButton2" runat="server" Height="49px" Width="100%" ImageUrl="~/imagenes/fotos/Saliir.png" OnClick="ImageButton2_Click" />
-            </div>
+         
 
             <!-- Contenido principal -->
             <div class="contenido">
@@ -236,7 +205,7 @@
 
 
                 <!-- Botón volver -->
-                <asp:Button ID="Button1" runat="server" CssClass="boton-volver" OnClick="Button1_Click" Text="⇦ Volver" />
+                <asp:Button ID="Button1" runat="server" CssClass="boton-volver" OnClick="Button1_Click" Text="⇦" />
             </div>
         </div>
     </form>

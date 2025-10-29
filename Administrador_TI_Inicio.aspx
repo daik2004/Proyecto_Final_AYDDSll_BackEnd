@@ -34,8 +34,8 @@
         /* Contenedor principal */
          .contenedor {
      
-     display: flex;
-     height: calc(100vh - 60px);
+         display: flex;
+         height: calc(100vh - 60px);
  }
 
             .menu-lateral {
@@ -115,7 +115,7 @@
             <!-- Menú lateral -->
             <div class="menu-lateral">
                 <asp:ImageButton ID="ImageButton1" runat="server" ImageUrl="~/imagenes/fotos/Usuarios.png" />
-                <asp:ImageButton ID="ImageButton2" runat="server" ImageUrl="~/imagenes/fotos/Saliir.png" OnClick="ImageButton2_Click" />
+                <asp:ImageButton ID="ImageButton2" runat="server" ImageUrl="~/imagenes/fotos/Saliir.png" OnClick="ImageButton2_Click1" />
             </div>
 
             <!-- Contenido -->

@@ -45,18 +45,24 @@
              flex-direction: column;
              align-Items: center;
              padding-top: 10px;
+             height: 100vh;
+             border-right: 1px solid #ccc;
          }
 
-        .menu-lateral img,
-        .menu-lateral input[type=image] {
-            width: 100%;
-            margin-bottom: 10px;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
+
+            .menu-lateral input[type=image] {
+                width: 90%;
+                margin-bottom: 20px;
+                border-radius: 12px;
+                background-color: white;
+                padding: 5px;
+                cursor: pointer;
+                transition: transform 0.2s, box-shadow 0.2s;
+            }
 
         .menu-lateral input[type=image]:hover {
             transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2)
         }
 
         /* Contenido principal */
@@ -109,7 +115,7 @@
 
             <!-- Menú lateral -->
             <div class="menu-lateral">
-                <asp:ImageButton ID="ImageButton1" runat="server" ImageUrl="~/imagenes/fotos/Solicitudes.png" OnClick="ImageButton1_Click" />
+                <asp:ImageButton ID="ImageButton1" runat="server" ImageUrl="~/imagenes/fotos/Solicitudes.png"/>
                 <asp:ImageButton ID="ImageButton2" runat="server" ImageUrl="~/imagenes/fotos/Saliir.png" OnClick="ImageButton2_Click" />
             </div>
 

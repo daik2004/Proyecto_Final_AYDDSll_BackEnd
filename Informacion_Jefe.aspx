@@ -42,30 +42,7 @@
             overflow: hidden;
         }
 
-        .menu-lateral {
-            width: 140px;
-            background-color: #F5F5F5;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 10px;
-            border-right: 1px solid #ccc;
-        }
 
-        .menu-lateral asp\:ImageButton {
-            width: 90%;
-            margin-bottom: 20px;
-            border-radius: 12px;
-            background-color: white;
-            padding: 5px;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .menu-lateral asp\:ImageButton:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
 
         .contenido {
             flex: 1;
@@ -162,11 +139,7 @@
     <form id="form1" runat="server">
         <div class="barra-superior">Información de Reportes</div>
 
-        <div class="contenedor">
-            <div class="menu-lateral">
-                <asp:ImageButton ID="ImageButton1" runat="server" Height="47px" ImageUrl="~/imagenes/fotos/Solicitudes.png" Width="100%" />
-                <asp:ImageButton ID="ImageButton2" runat="server" Height="49px" ImageUrl="~/imagenes/fotos/Saliir.png" Width="100%" OnClick="ImageButton2_Click" />
-            </div>
+      
 
             <div class="contenido">
                 <div class="panel scroll-tabla">
@@ -207,9 +180,9 @@
 
              
 
-                <asp:Button ID="Button1" runat="server" CssClass="boton-volver" OnClick="Button1_Click" Text="⇦ Volver" />
+                <asp:Button ID="Button1" runat="server" CssClass="boton-volver" OnClick="Button1_Click" Text="⇦" />
             </div>
-        </div>
+      
     </form>
 </body>
 </html>

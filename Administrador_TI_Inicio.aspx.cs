@@ -9,16 +9,8 @@ namespace Proyecto_Final_Diseño_
 {
     public partial class Administrador_TI_Inicio : System.Web.UI.Page
     {
-        protected void Page_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void ImageButton2_Click(object sender, ImageClickEventArgs e)
-        {
-            Response.Redirect("Login.aspx");
-        }
-
+    
+     
         protected void ImageButton3_Click1(object sender, ImageClickEventArgs e)
         {
             Response.Redirect("Administrador_Usuario.aspx");
@@ -32,6 +24,11 @@ namespace Proyecto_Final_Diseño_
         protected void ImageButton5_Click(object sender, ImageClickEventArgs e)
         {
             Response.Redirect("Administrador_TI_Rol.aspx");
+        }
+
+        protected void ImageButton2_Click1(object sender, ImageClickEventArgs e)
+        {
+            Response.Redirect("Login.aspx");
         }
     }
 }

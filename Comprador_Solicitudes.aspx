@@ -39,24 +39,7 @@
             overflow: hidden;
         }
 
-        /* Menú lateral */
-        .auto-style1 {
-            width: 150px;
-            min-width: 150px;
-            background-color: #F5F5F5;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 15px;
-        }
-
-        .auto-style1 img, 
-        .auto-style1 input[type=image] {
-            width: 100%;
-            height: 55px;
-            margin-bottom: 20px;
-            object-fit: contain;
-        }
+       
 
         /* Panel de contenido */
         #Panel1 {
@@ -112,6 +95,23 @@
         #Button1:hover {
             background-color: #e6b800;
         }
+        .boton-volver {
+            margin-top: 20px;
+            width: 230px;
+            height: 46px;
+            background-color: #FFCC00;
+            border: none;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius 8px;
+            cursor: pointer;
+            transition: 0.3s;
+
+        }
+        .boton-volver:hover{
+            background-color: #e6b800;
+            transform: scale(1.03);
+        }
     </style>
 </head>
 <body>
@@ -123,12 +123,7 @@
 
         <!-- Contenedor principal -->
         <div class="main-container">
-            <!-- Menú lateral -->
-            <div class="auto-style1">
-                <asp:ImageButton ID="ImageButton1" runat="server" ImageUrl="~/imagenes/fotos/Solicitudes.png" />
-                <asp:ImageButton ID="ImageButton2" runat="server" ImageUrl="~/imagenes/fotos/Saliir.png" OnClick="ImageButton2_Click" />
-            </div>
-
+  
             <!-- Panel de contenido -->
             <asp:Panel ID="Panel1" runat="server">
                 <div>
@@ -182,6 +177,7 @@
                 </div>
 
                 <asp:Button ID="Button1" runat="server" Text="Crear" OnClick="Button1_Click" />
+                <asp:Button ID="Button2" runat="server" CssClass="boton-volver" Text="⇦"  />
             </asp:Panel>
         </div>
     </form>

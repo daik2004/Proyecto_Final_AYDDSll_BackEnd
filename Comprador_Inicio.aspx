@@ -44,18 +44,25 @@
             flex-direction: column;
             align-items: center;
             padding-top: 10px;
+            height: 100vh;
+            border-right: 1px, solid #ccc;
+
         }
 
-        .menu-lateral img,
+      
         .menu-lateral input[type=image] {
-            width: 100%;
-            margin-bottom: 10px;
+            width: 90%;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            background-color: white;
+            padding: 5px;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: transform 0.2s,box-shadow 0.2s;
         }
 
         .menu-lateral input[type=image]:hover {
             transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2)
         }
 
         /* Contenido principal */
