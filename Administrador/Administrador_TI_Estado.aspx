@@ -1,9 +1,9 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Administrador_TI_Rol.aspx.cs" Inherits="Proyecto_Final_Diseño_.Administrador_TI_Rol1" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Administrador_TI_Estado.aspx.cs" Inherits="Proyecto_Final_Diseño_.Administrador_TI_Estado" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Definir Rol de Usuario</title>
+    <title>Definir Estado de Usuario</title>
     <style>
         body {
             margin: 0;
@@ -29,7 +29,9 @@
             display: flex;
             min-height: calc(100vh - 60px);
         }
-         .contenedor {
+
+   
+     .contenedor {
      display: flex;
      flex: 1;
      overflow: hidden;
@@ -62,14 +64,14 @@
      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
  }
 
-        /* Panel mejorado */
+      
         .panel-mejorado {
             flex: 1;
             padding: 40px;
             background-color: #4D6C8B;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 25px;
             color: #fff;
         }
 
@@ -85,7 +87,7 @@
             font-size: 1.1rem;
         }
 
-        .input-text, .input-select {
+        .input-text, .input-select, .input-textarea {
             padding: 10px 12px;
             border-radius: 8px;
             border: 1px solid #ccc;
@@ -94,19 +96,8 @@
         }
 
         .input-textarea {
-            padding: 10px 12px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            font-size: 1rem;
-            color: black;
             resize: none;
             height: 80px;
-        }
-
-        .info-text {
-            font-size: 0.9rem;
-            color: #ddd;
-            margin-top: 4px;
         }
 
         .botones-panel {
@@ -135,44 +126,33 @@
 <body>
     <form id="form1" runat="server">
         <!-- Barra superior -->
-        <div class="barra-superior">Definir Rol</div>
-
+        <div class="barra-superior">Definir Estado</div>
+        <!-- -->
         <div class="contenedor">
-            <!-- Menú lateral  -->
-            <div class="menu-lateral">
-                <asp:ImageButton ID="ImageButton1" runat="server" Height="47px" ImageUrl="~/imagenes/fotos/Usuarios.png" />
-                <asp:ImageButton ID="ImageButton2" runat="server" Height="49px" ImageUrl="~/imagenes/fotos/Saliir.png" OnClick="ImageButton2_Click" />
-            </div>
-
+           
             <!-- Panel de contenido mejorado -->
             <div class="panel-mejorado">
                 <div class="form-group">
-                    <label for="TextBox12">Id Asignado</label>
+                    <label for="TextBox12">Id asociado a Usuario</label>
                     <asp:TextBox ID="TextBox12" runat="server" CssClass="input-text"></asp:TextBox>
                 </div>
 
                 <div class="form-group">
-                    <label for="DropDownList1">Rol</label>
+                    <label for="DropDownList1">Estado</label>
                     <asp:DropDownList ID="DropDownList1" runat="server" CssClass="input-select">
-                        <asp:ListItem>Administrador</asp:ListItem>
-                        <asp:ListItem>Comprador</asp:ListItem>
-                        <asp:ListItem>Financiero</asp:ListItem>
+                        <asp:ListItem>Activar</asp:ListItem>
+                        <asp:ListItem>Inactivar</asp:ListItem>
                     </asp:DropDownList>
                 </div>
 
                 <div class="form-group">
-                    <label for="DropDownList2">Rol Financiero</label>
-                    <asp:DropDownList ID="DropDownList2" runat="server" CssClass="input-select">
-                        <asp:ListItem>Aprobador 1</asp:ListItem>
-                        <asp:ListItem>Aprobador 2</asp:ListItem>
-                        <asp:ListItem>Aprobador 3</asp:ListItem>
-                    </asp:DropDownList>
-                    <span class="info-text">(Aparece solo si se selecciona Rol Financiero)</span>
+                    <label for="TextBox13">Motivo de inactivación de cuenta</label>
+                    <asp:TextBox ID="TextBox13" runat="server" TextMode="MultiLine" CssClass="input-textarea"></asp:TextBox>
                 </div>
 
                 <div class="botones-panel">
-                    <asp:Button ID="Button1" runat="server" Text="Asignar" OnClick="Page_Load" CssClass="btn-accion" />
-                    <asp:Button ID="Button2" runat="server" Text="⇦" OnClick="Button2_Click" CssClass="btn-accion" />
+                    <asp:Button ID="Button1" runat="server" Text="Definir Estado" OnClick="Page_Load" CssClass="btn-accion" />
+                    <asp:Button ID="Button3" runat="server" Text="⇦" OnClick="Button2_Click" CssClass="btn-accion" />
                 </div>
             </div>
         </div>

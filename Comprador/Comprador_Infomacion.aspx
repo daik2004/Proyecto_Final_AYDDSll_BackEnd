@@ -1,4 +1,6 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Informacion_Jefe.aspx.cs" Inherits="Proyecto_Final_Diseño_.Informacion_Jefe" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Comprador_Infomacion.aspx.cs" Inherits="Proyecto_Final_Diseño_.Comprador_Infomacion" %>
+
+
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -18,12 +20,6 @@
             flex-direction: column;
         }
 
-        form {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
         .barra-superior {
             height: 60px;
             background-color: #89C4F4;
@@ -33,23 +29,24 @@
             font-size: 28px;
             font-weight: bold;
             color: #2C3E50;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            flex-shrink: 0;
         }
 
         .contenedor {
-            flex: 1;
             display: flex;
+            flex: 1;
             overflow: hidden;
         }
 
 
 
+
         .contenido {
-            flex: 1;
+            flex: 1 1 auto;
             display: flex;
             flex-direction: column;
             padding: 20px;
-            overflow-x: auto;
+            overflow: hidden;
         }
 
         .panel {
@@ -59,6 +56,12 @@
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             margin-bottom: 20px;
+            overflow: auto;
+        }
+
+        .scroll-tabla {
+            flex: 1 1 auto;
+            overflow: auto;
         }
 
         .tabla {
@@ -67,17 +70,17 @@
             text-align: center;
         }
 
-        .tabla th, .tabla td {
-            padding: 12px;
-            font-size: 16px;
-            border-bottom: 1px solid #ccc;
-        }
+            .tabla th, .tabla td {
+                padding: 12px;
+                font-size: 16px;
+                border-bottom: 1px solid #ccc;
+            }
 
-        .tabla th {
-            background-color: #f0f0f0;
-            color: #2C3E50;
-            font-weight: bold;
-        }
+            .tabla th {
+                background-color: #f0f0f0;
+                color: #2C3E50;
+                font-weight: bold;
+            }
 
         .estado {
             padding: 5px 10px;
@@ -87,26 +90,41 @@
             color: #fff;
         }
 
-        .estado-procesando { background-color: #FFCC00; color: #2C3E50; }
-        .estado-aceptada { background-color: #2ECC71; }
-        .estado-rechazada { background-color: #E74C3C; }
+        .estado-procesando {
+            background-color: #FFCC00;
+            color: #2C3E50;
+        }
+
+        .estado-aceptada {
+            background-color: #2ECC71;
+        }
+
+        .estado-rechazada {
+            background-color: #E74C3C;
+        }
 
         .boton-volver {
-            margin-top: 20px;
-            width: 230px;
-            height: 46px;
+            margin: 20px auto; /* Centra el botón horizontalmente */
+            display: block; /* Necesario para que el margin auto funcione */
+            width: 200px;
+            height: 45px;
             background-color: #FFCC00;
             border: none;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: bold;
             border-radius: 8px;
             cursor: pointer;
             transition: 0.3s;
         }
 
-        .boton-volver:hover {
-            background-color: #e6b800;
-            transform: scale(1.03);
+            .boton-volver:hover {
+                background-color: #e6b800;
+                transform: scale(1.03);
+            }
+
+        /* Scroll horizontal en tabla si es necesario */
+        .scroll-tabla {
+            overflow-x: auto;
         }
 
         .filtro {
@@ -114,33 +132,18 @@
             font-size: 18px;
         }
 
-        .filtro select {
-            height: 28px;
-            width: 220px;
-            font-size: 16px;
-        }
-
-        .scroll-tabla {
-            overflow-x: auto;
-        }
-
-        .botones-aceptar-denegar {
-            display: flex;
-            gap: 20px;
-        }
-
-        .botones-aceptar-denegar asp\:ImageButton {
-            width: 100px;
-            height: 36px;
-        }
+            .filtro select {
+                height: 28px;
+                width: 220px;
+                font-size: 16px;
+            }
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
         <div class="barra-superior">Información de Reportes</div>
 
-      
-
+        <div class="contenedor">
             <div class="contenido">
                 <div class="panel scroll-tabla">
                     <table class="tabla">
@@ -153,6 +156,7 @@
                                 <th>Descripción</th>
                                 <th>Prioridad</th>
                                 <th>Estado</th>
+                                <th>Procesado por</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -163,7 +167,20 @@
                                 <td>3</td>
                                 <td>Caja de hojas</td>
                                 <td>Alta</td>
-                                <td><asp:Label ID="Label1" runat="server" CssClass="estado estado-procesando" Text="Procesando"></asp:Label></td>
+                                <td>
+                                    <asp:Label ID="Label1" runat="server" CssClass="estado estado-procesando" Text="Procesando"></asp:Label></td>
+                                <td>Financiero</td>
+                            </tr>
+                            <tr>
+                                <td>#124</td>
+                                <td>Impresora</td>
+                                <td>Unidad</td>
+                                <td>1</td>
+                                <td>HP LaserJet</td>
+                                <td>Media</td>
+                                <td>
+                                    <asp:Label ID="Label2" runat="server" CssClass="estado estado-aceptada" Text="Aceptada"></asp:Label></td>
+                                <td>Jefatura</td>
                             </tr>
                         </tbody>
                     </table>
@@ -178,14 +195,9 @@
                     </asp:DropDownList>
                 </div>
 
-             
-
-                <asp:Button ID="Button1" runat="server" CssClass="boton-volver" OnClick="Button1_Click" Text="⇦" />
+                <asp:Button ID="Button1" runat="server" CssClass="boton-volver" OnClick="Button1_Click" Text="⇦ " />
             </div>
-      
+        </div>
     </form>
-</body>
-</html>
-
 </body>
 </html>

@@ -66,17 +66,17 @@
             text-align: center;
         }
 
-        .tabla th, .tabla td {
-            padding: 12px;
-            font-size: 16px;
-            border-bottom: 1px solid #ccc;
-        }
+            .tabla th, .tabla td {
+                padding: 12px;
+                font-size: 16px;
+                border-bottom: 1px solid #ccc;
+            }
 
-        .tabla th {
-            background-color: #f0f0f0;
-            color: #2C3E50;
-            font-weight: bold;
-        }
+            .tabla th {
+                background-color: #f0f0f0;
+                color: #2C3E50;
+                font-weight: bold;
+            }
 
         .estado {
             padding: 5px 10px;
@@ -86,9 +86,18 @@
             color: #fff;
         }
 
-        .estado-procesando { background-color: #FFCC00; color: #2C3E50; }
-        .estado-aceptada { background-color: #2ECC71; }
-        .estado-rechazada { background-color: #E74C3C; }
+        .estado-procesando {
+            background-color: #FFCC00;
+            color: #2C3E50;
+        }
+
+        .estado-aceptada {
+            background-color: #2ECC71;
+        }
+
+        .estado-rechazada {
+            background-color: #E74C3C;
+        }
 
         /* Botones Aceptar / Denegar */
         .botones-accion {
@@ -96,20 +105,21 @@
             gap: 15px;
         }
 
-        .botones-accion asp\:ImageButton {
-            width: 120px;
-            height: 35px;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
+            .botones-accion asp\:ImageButton {
+                width: 120px;
+                height: 35px;
+                cursor: pointer;
+                transition: transform 0.2s, box-shadow 0.2s;
+            }
 
-        .botones-accion asp\:ImageButton:hover {
-            transform: scale(1.05);
-            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
-        }
+                .botones-accion asp\:ImageButton:hover {
+                    transform: scale(1.05);
+                    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+                }
 
-        /* Botón volver */
         .boton-volver {
+            margin: 20px auto; /* Centra el botón horizontalmente */
+            display: block; /* Necesario para que el margin auto funcione */
             width: 200px;
             height: 45px;
             background-color: #FFCC00;
@@ -121,11 +131,12 @@
             transition: 0.3s;
         }
 
-        .boton-volver:hover {
-            background-color: #e6b800;
-            transform: scale(1.03);
-        }
+            .boton-volver:hover {
+                background-color: #e6b800;
+                transform: scale(1.03);
+            }
 
+        /* Scroll horizontal en tabla si es necesario */
         .scroll-tabla {
             overflow-x: auto;
         }
@@ -138,7 +149,7 @@
 
         <!-- Contenedor principal -->
         <div class="contenedor">
-         
+
 
             <!-- Contenido principal -->
             <div class="contenido">
@@ -162,7 +173,8 @@
                                 <td>3</td>
                                 <td>₡10 000</td>
                                 <td>Baja</td>
-                                <td><asp:Label ID="Label3" runat="server" CssClass="estado estado-procesando" Text="Procesando"></asp:Label></td>
+                                <td>
+                                    <asp:Label ID="Label3" runat="server" CssClass="estado estado-procesando" Text="Procesando"></asp:Label></td>
                             </tr>
                             <tr>
                                 <td>#236</td>
@@ -170,7 +182,8 @@
                                 <td>1</td>
                                 <td>₡100 000</td>
                                 <td>Baja</td>
-                                <td><asp:Label ID="Label4" runat="server" CssClass="estado estado-procesando" Text="Procesando"></asp:Label></td>
+                                <td>
+                                    <asp:Label ID="Label4" runat="server" CssClass="estado estado-procesando" Text="Procesando"></asp:Label></td>
                             </tr>
                             <tr>
                                 <td>#452</td>
@@ -178,7 +191,8 @@
                                 <td>1</td>
                                 <td>₡1 000 000</td>
                                 <td>Baja</td>
-                                <td><asp:Label ID="Label5" runat="server" CssClass="estado estado-procesando" Text="Procesando"></asp:Label></td>
+                                <td>
+                                    <asp:Label ID="Label5" runat="server" CssClass="estado estado-procesando" Text="Procesando"></asp:Label></td>
                             </tr>
                             <tr>
                                 <td>#326</td>
@@ -186,7 +200,8 @@
                                 <td>1</td>
                                 <td>₡125 000</td>
                                 <td>Baja</td>
-                                <td><asp:Label ID="Label6" runat="server" CssClass="estado estado-procesando" Text="Procesando"></asp:Label></td>
+                                <td>
+                                    <asp:Label ID="Label6" runat="server" CssClass="estado estado-procesando" Text="Procesando"></asp:Label></td>
                             </tr>
                         </tbody>
                     </table>
@@ -198,10 +213,10 @@
                     Ej. Esta solicitud es aprobada/denegada debido a que...
                 </div>
 
-   <div class="panel" style="display: flex; gap: 20px;">
-       <asp:ImageButton ID="ImageButton3" runat="server" Height="40px" ImageUrl="~/imagenes/fotos/Aceptar.png" Width="162px" />
-       <asp:ImageButton ID="ImageButton4" runat="server" Height="38px" ImageUrl="~/imagenes/fotos/Denegar.png" Width="162px" />
-   </div>
+                <div class="panel" style="display: flex; gap: 20px;">
+                    <asp:ImageButton ID="ImageButton3" runat="server" Height="40px" ImageUrl="~/imagenes/fotos/Aceptar.png" Width="162px" />
+                    <asp:ImageButton ID="ImageButton4" runat="server" Height="38px" ImageUrl="~/imagenes/fotos/Denegar.png" Width="162px" />
+                </div>
 
 
                 <!-- Botón volver -->
