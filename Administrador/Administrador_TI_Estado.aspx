@@ -127,14 +127,9 @@
     <form id="form1" runat="server">
         <!-- Barra superior -->
         <div class="barra-superior">Definir Estado</div>
-
+        <!-- -->
         <div class="contenedor">
-            <!-- Menú lateral (sin cambios) -->
-            <div class="menu-lateral">
-                <asp:ImageButton ID="ImageButton1" runat="server" ImageUrl="~/imagenes/fotos/Usuarios.png" OnClick="ImageButton1_Click" />
-                <asp:ImageButton ID="ImageButton2" runat="server" ImageUrl="~/imagenes/fotos/Saliir.png" OnClick="ImageButton2_Click" />
-            </div>
-
+           
             <!-- Panel de contenido mejorado -->
             <div class="panel-mejorado">
                 <div class="form-group">

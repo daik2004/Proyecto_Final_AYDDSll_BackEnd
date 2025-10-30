@@ -32,14 +32,14 @@
             flex-shrink: 0;
         }
 
-           .contenedor {
-     display: flex;
-     flex: 1;
-     overflow: hidden;
- }
+        .contenedor {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
 
- 
-      
+
+
 
         .contenido {
             flex: 1 1 auto;
@@ -70,17 +70,17 @@
             text-align: center;
         }
 
-        .tabla th, .tabla td {
-            padding: 12px;
-            font-size: 16px;
-            border-bottom: 1px solid #ccc;
-        }
+            .tabla th, .tabla td {
+                padding: 12px;
+                font-size: 16px;
+                border-bottom: 1px solid #ccc;
+            }
 
-        .tabla th {
-            background-color: #f0f0f0;
-            color: #2C3E50;
-            font-weight: bold;
-        }
+            .tabla th {
+                background-color: #f0f0f0;
+                color: #2C3E50;
+                font-weight: bold;
+            }
 
         .estado {
             padding: 5px 10px;
@@ -90,45 +90,60 @@
             color: #fff;
         }
 
-        .estado-procesando { background-color: #FFCC00; color: #2C3E50; }
-        .estado-aceptada { background-color: #2ECC71; }
-        .estado-rechazada { background-color: #E74C3C; }
+        .estado-procesando {
+            background-color: #FFCC00;
+            color: #2C3E50;
+        }
+
+        .estado-aceptada {
+            background-color: #2ECC71;
+        }
+
+        .estado-rechazada {
+            background-color: #E74C3C;
+        }
 
         .boton-volver {
-            margin-top: 20px;
-            width: 230px;
-            height: 46px;
+            margin: 20px auto; /* Centra el botón horizontalmente */
+            display: block; /* Necesario para que el margin auto funcione */
+            width: 200px;
+            height: 45px;
             background-color: #FFCC00;
             border: none;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: bold;
             border-radius: 8px;
             cursor: pointer;
             transition: 0.3s;
         }
 
-        .boton-volver:hover {
-            background-color: #e6b800;
-            transform: scale(1.03);
+            .boton-volver:hover {
+                background-color: #e6b800;
+                transform: scale(1.03);
+            }
+
+        /* Scroll horizontal en tabla si es necesario */
+        .scroll-tabla {
+            overflow-x: auto;
         }
 
         .filtro {
             margin-top: 20px;
             font-size: 18px;
         }
-        
-        .filtro select {
-            height: 28px;
-            width: 220px;
-            font-size: 16px;
-        }
+
+            .filtro select {
+                height: 28px;
+                width: 220px;
+                font-size: 16px;
+            }
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
         <div class="barra-superior">Información de Reportes</div>
 
-        <div class="contenedor">       
+        <div class="contenedor">
             <div class="contenido">
                 <div class="panel scroll-tabla">
                     <table class="tabla">
@@ -152,7 +167,8 @@
                                 <td>3</td>
                                 <td>Caja de hojas</td>
                                 <td>Alta</td>
-                                <td><asp:Label ID="Label1" runat="server" CssClass="estado estado-procesando" Text="Procesando"></asp:Label></td>
+                                <td>
+                                    <asp:Label ID="Label1" runat="server" CssClass="estado estado-procesando" Text="Procesando"></asp:Label></td>
                                 <td>Financiero</td>
                             </tr>
                             <tr>
@@ -162,7 +178,8 @@
                                 <td>1</td>
                                 <td>HP LaserJet</td>
                                 <td>Media</td>
-                                <td><asp:Label ID="Label2" runat="server" CssClass="estado estado-aceptada" Text="Aceptada"></asp:Label></td>
+                                <td>
+                                    <asp:Label ID="Label2" runat="server" CssClass="estado estado-aceptada" Text="Aceptada"></asp:Label></td>
                                 <td>Jefatura</td>
                             </tr>
                         </tbody>

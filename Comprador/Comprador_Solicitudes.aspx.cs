@@ -34,7 +34,8 @@ namespace Proyecto_Final_Diseño_
             Response.Redirect("Login.aspx");
         }
 
-        protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
+     
+        protected void Button2_Click(object sender, EventArgs e)
         {
             Response.Redirect("Comprador_Inicio.aspx");
         }

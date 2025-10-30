@@ -25,44 +25,17 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-        .barra-superior span {
-            font-size: 28px;
-            font-weight: bold;
-            color: #2C3E50;
-        }
+            .barra-superior span {
+                font-size: 28px;
+                font-weight: bold;
+                color: #2C3E50;
+            }
 
         /* Contenedor principal */
         .contenedor {
             display: flex;
             flex: 1;
             overflow: hidden;
-        }
-
-        /* Menú lateral */
-        .menu-lateral {
-            width: 140px;
-            background-color: #F5F5F5;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 10px;
-            height: 100vh;
-            border-right: 1px solid #ccc;
-        }
-
-        .menu-lateral input[type=image], .menu-lateral asp\:ImageButton {
-            width: 90%;
-            margin-bottom: 20px;
-            border-radius: 12px;
-            background-color: white;
-            padding: 5px;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .menu-lateral input[type=image]:hover, .menu-lateral asp\:ImageButton:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
 
         /* Contenido principal */
@@ -90,17 +63,17 @@
             text-align: center;
         }
 
-        .tabla th, .tabla td {
-            padding: 12px;
-            font-size: 16px;
-            border-bottom: 1px solid #ccc;
-        }
+            .tabla th, .tabla td {
+                padding: 12px;
+                font-size: 16px;
+                border-bottom: 1px solid #ccc;
+            }
 
-        .tabla th {
-            background-color: #f0f0f0;
-            color: #2C3E50;
-            font-weight: bold;
-        }
+            .tabla th {
+                background-color: #f0f0f0;
+                color: #2C3E50;
+                font-weight: bold;
+            }
 
         .estado {
             padding: 5px 10px;
@@ -110,12 +83,22 @@
             color: #fff;
         }
 
-        .estado-procesando { background-color: #FFCC00; color: #2C3E50; }
-        .estado-aceptada { background-color: #2ECC71; }
-        .estado-rechazada { background-color: #E74C3C; }
+        .estado-procesando {
+            background-color: #FFCC00;
+            color: #2C3E50;
+        }
+
+        .estado-aceptada {
+            background-color: #2ECC71;
+        }
+
+        .estado-rechazada {
+            background-color: #E74C3C;
+        }
 
         .boton-volver {
-            margin-top: 20px;
+            margin: 20px auto; /* Centra el botón horizontalmente */
+            display: block; /* Necesario para que el margin auto funcione */
             width: 200px;
             height: 45px;
             background-color: #FFCC00;
@@ -127,10 +110,10 @@
             transition: 0.3s;
         }
 
-        .boton-volver:hover {
-            background-color: #e6b800;
-            transform: scale(1.03);
-        }
+            .boton-volver:hover {
+                background-color: #e6b800;
+                transform: scale(1.03);
+            }
 
         /* Scroll horizontal en tabla si es necesario */
         .scroll-tabla {
@@ -145,67 +128,62 @@
             <span>Gestión Financiera</span>
         </div>
 
-        <!-- Contenedor principal -->
-        <div class="contenedor">
-            <!-- Menú lateral -->
-            <div class="menu-lateral">
-                <asp:ImageButton ID="ImageButton1" runat="server" Height="47px" ImageUrl="~/imagenes/fotos/Solicitudes.png" Width="100%" />
-                <asp:ImageButton ID="ImageButton2" runat="server" Height="49px" ImageUrl="~/imagenes/fotos/Saliir.png" Width="100%" OnClick="ImageButton2_Click" />
-            </div>
+        <!-- Contenido principal -->
+        <div class="contenido">
+            <div class="panel scroll-tabla">
+                <table class="tabla">
+                    <thead>
+                        <tr>
+                            <th>Id Solicitante</th>
+                            <th>Descripción</th>
+                            <th>Cantidad</th>
+                            <th>Monto</th>
+                            <th>Prioridad</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Mantener contenido de gestión financiera tal como estaba -->
+                        <tr>
+                            <td>#123</td>
+                            <td>Hojas</td>
+                            <td>3</td>
+                            <td>₡10 000</td>
+                            <td>Baja</td>
+                            <td>
+                                <asp:Label ID="Label1" runat="server" CssClass="estado estado-procesando" Text="Procesando"></asp:Label></td>
+                        </tr>
+                        <tr>
+                            <td>#236</td>
+                            <td>Impresora</td>
+                            <td>1</td>
+                            <td>₡100 000</td>
+                            <td>Baja</td>
+                            <td>
+                                <asp:Label ID="Label2" runat="server" CssClass="estado estado-aceptada" Text="Aceptada"></asp:Label></td>
+                        </tr>
+                        <tr>
+                            <td>#452</td>
+                            <td>PC Gamer</td>
+                            <td>1</td>
+                            <td>₡1 000 000</td>
+                            <td>Baja</td>
+                            <td>
+                                <asp:Label ID="Label3" runat="server" CssClass="estado estado-rechazada" Text="Rechazada"></asp:Label></td>
+                        </tr>
+                        <tr>
+                            <td>#326</td>
+                            <td>Escritorio</td>
+                            <td>1</td>
+                            <td>₡125 000</td>
+                            <td>Baja</td>
+                            <td>
+                                <asp:Label ID="Label4" runat="server" CssClass="estado estado-procesando" Text="Procesando"></asp:Label></td>
+                        </tr>
+                    </tbody>
+                </table>
 
-            <!-- Contenido principal -->
-            <div class="contenido">
-                <div class="panel scroll-tabla">
-                    <table class="tabla">
-                        <thead>
-                            <tr>
-                                <th>Id Solicitante</th>
-                                <th>Descripción</th>
-                                <th>Cantidad</th>
-                                <th>Monto</th>
-                                <th>Prioridad</th>
-                                <th>Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Mantener contenido de gestión financiera tal como estaba -->
-                            <tr>
-                                <td>#123</td>
-                                <td>Hojas</td>
-                                <td>3</td>
-                                <td>₡10 000</td>
-                                <td>Baja</td>
-                                <td><asp:Label ID="Label1" runat="server" CssClass="estado estado-procesando" Text="Procesando"></asp:Label></td>
-                            </tr>
-                            <tr>
-                                <td>#236</td>
-                                <td>Impresora</td>
-                                <td>1</td>
-                                <td>₡100 000</td>
-                                <td>Baja</td>
-                                <td><asp:Label ID="Label2" runat="server" CssClass="estado estado-aceptada" Text="Aceptada"></asp:Label></td>
-                            </tr>
-                            <tr>
-                                <td>#452</td>
-                                <td>PC Gamer</td>
-                                <td>1</td>
-                                <td>₡1 000 000</td>
-                                <td>Baja</td>
-                                <td><asp:Label ID="Label3" runat="server" CssClass="estado estado-rechazada" Text="Rechazada"></asp:Label></td>
-                            </tr>
-                            <tr>
-                                <td>#326</td>
-                                <td>Escritorio</td>
-                                <td>1</td>
-                                <td>₡125 000</td>
-                                <td>Baja</td>
-                                <td><asp:Label ID="Label4" runat="server" CssClass="estado estado-procesando" Text="Procesando"></asp:Label></td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <asp:Button ID="Button1" runat="server" CssClass="boton-volver" OnClick="Button1_Click" Text="⇦ Volver" />
-                </div>
+                <asp:Button ID="Button1" runat="server" CssClass="boton-volver" OnClick="Button1_Click" Text="⇦" />
             </div>
         </div>
     </form>

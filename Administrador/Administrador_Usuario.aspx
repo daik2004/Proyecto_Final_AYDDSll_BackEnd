@@ -28,29 +28,6 @@
             min-height: calc(100vh - 60px);
         }
 
-        /* Menú lateral */
-        .menu-lateral {
-            width: 140px;
-            background-color: #F5F5F5;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 20px;
-            gap: 20px;
-            border-right: 1px solid #ccc;
-        }
-
-        .menu-lateral img {
-            width: 100%;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .menu-lateral img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
 
         /* Panel principal */
         .panel-mejorado {
@@ -119,12 +96,7 @@
         <div class="barra-superior">Definir un Usuario</div>
 
         <div class="contenedor">
-            <!-- Menú lateral -->
-            <div class="menu-lateral">
-                <asp:ImageButton ID="ImageButton1" runat="server" Height="47px" ImageUrl="~/imagenes/fotos/Usuarios.png" />
-                <asp:ImageButton ID="ImageButton2" runat="server" Height="49px" ImageUrl="~/imagenes/fotos/Saliir.png" OnClick="ImageButton2_Click" />
-            </div>
-
+         
             <!-- Panel de usuario -->
             <div class="panel-mejorado">
                 <div class="form-row">

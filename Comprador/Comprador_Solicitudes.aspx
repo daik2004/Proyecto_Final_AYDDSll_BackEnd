@@ -39,7 +39,7 @@
             overflow: hidden;
         }
 
-       
+
 
         /* Panel de contenido */
         #Panel1 {
@@ -92,25 +92,37 @@
             transition: 0.3s;
         }
 
-        #Button1:hover {
-            background-color: #e6b800;
-        }
+            #Button1:hover {
+                background-color: #e6b800;
+            }
+
         .boton-volver {
+            text-align: center; /* Centra los botones horizontalmente */
             margin-top: 20px;
-            width: 230px;
-            height: 46px;
+        }
+
+        .btn {
+            display: block; /* Hace que cada botón ocupe su propia línea */
+            width: 200px;
+            height: 45px;
+            margin: 10px auto; /* Centra horizontalmente y separa los botones */
             background-color: #FFCC00;
             border: none;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: bold;
-            border-radius 8px;
+            border-radius: 8px;
             cursor: pointer;
             transition: 0.3s;
-
         }
-        .boton-volver:hover{
-            background-color: #e6b800;
-            transform: scale(1.03);
+
+            .btn:hover {
+                background-color: #e6b800;
+                transform: scale(1.03);
+            }
+
+        /* Scroll horizontal en tabla si es necesario */
+        .scroll-tabla {
+            overflow-x: auto;
         }
     </style>
 </head>
@@ -123,10 +135,10 @@
 
         <!-- Contenedor principal -->
         <div class="main-container">
-  
             <!-- Panel de contenido -->
-            <asp:Panel ID="Panel1" runat="server">
-                <div>
+            <asp:Panel ID="Panel1" runat="server" CssClass="panel-contenido">
+
+                <div class="campo">
                     <asp:Label ID="Label1" runat="server" Text="Categoría"></asp:Label>
                     <asp:DropDownList ID="DropDownList1" runat="server">
                         <asp:ListItem>Papelería</asp:ListItem>
@@ -136,7 +148,7 @@
                     </asp:DropDownList>
                 </div>
 
-                <div>
+                <div class="campo">
                     <asp:Label ID="Label2" runat="server" Text="Prioridad"></asp:Label>
                     <asp:DropDownList ID="DropDownList3" runat="server">
                         <asp:ListItem>Baja</asp:ListItem>
@@ -146,7 +158,7 @@
                     </asp:DropDownList>
                 </div>
 
-                <div>
+                <div class="campo">
                     <asp:Label ID="Label3" runat="server" Text="Unidad de medida"></asp:Label>
                     <asp:DropDownList ID="DropDownList2" runat="server">
                         <asp:ListItem>Unidad</asp:ListItem>
@@ -156,30 +168,33 @@
                     </asp:DropDownList>
                 </div>
 
-                <div>
+                <div class="campo">
                     <asp:Label ID="Label5" runat="server" Text="Cantidad solicitada"></asp:Label>
                     <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
                 </div>
 
-                <div>
+                <div class="campo">
                     <asp:Label ID="Label4" runat="server" Text="Motivo de solicitud"></asp:Label>
                     <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
                 </div>
 
-                <div>
+                <div class="campo">
                     <asp:Label ID="Label6" runat="server" Text="Descripción"></asp:Label>
                     <asp:TextBox ID="TextBox3" runat="server" TextMode="MultiLine"></asp:TextBox>
                 </div>
 
-                <div>
+                <div class="campo">
                     <asp:Label ID="Label7" runat="server" Text="Monto ₡"></asp:Label>
                     <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
                 </div>
 
-                <asp:Button ID="Button1" runat="server" Text="Crear" OnClick="Button1_Click" />
-                <asp:Button ID="Button2" runat="server" CssClass="boton-volver" Text="⇦"  />
+                <div class="boton-volver">
+                    <asp:Button ID="Button1" runat="server" Text="Crear" OnClick="Button1_Click" CssClass="btn" />
+                    <asp:Button ID="Button2" runat="server" Text="⇦" OnClick="Button2_Click" CssClass="btn" />
+                </div>
+
             </asp:Panel>
         </div>
     </form>
 </body>
-</html>
+

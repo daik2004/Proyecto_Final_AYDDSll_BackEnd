@@ -67,17 +67,17 @@
             text-align: center;
         }
 
-        .tabla th, .tabla td {
-            padding: 12px;
-            font-size: 16px;
-            border-bottom: 1px solid #ccc;
-        }
+            .tabla th, .tabla td {
+                padding: 12px;
+                font-size: 16px;
+                border-bottom: 1px solid #ccc;
+            }
 
-        .tabla th {
-            background-color: #f0f0f0;
-            color: #2C3E50;
-            font-weight: bold;
-        }
+            .tabla th {
+                background-color: #f0f0f0;
+                color: #2C3E50;
+                font-weight: bold;
+            }
 
         .estado {
             padding: 5px 10px;
@@ -87,38 +87,54 @@
             color: #fff;
         }
 
-        .estado-procesando { background-color: #FFCC00; color: #2C3E50; }
-        .estado-aceptada { background-color: #2ECC71; }
-        .estado-rechazada { background-color: #E74C3C; }
+        .estado-procesando {
+            background-color: #FFCC00;
+            color: #2C3E50;
+        }
+
+        .estado-aceptada {
+            background-color: #2ECC71;
+        }
+
+        .estado-rechazada {
+            background-color: #E74C3C;
+        }
 
         .boton-volver {
-            margin-top: 20px;
-            width: 230px;
-            height: 46px;
+            margin: 20px auto; /* Centra el botón horizontalmente */
+            display: block; /* Necesario para que el margin auto funcione */
+            width: 200px;
+            height: 45px;
             background-color: #FFCC00;
             border: none;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: bold;
             border-radius: 8px;
             cursor: pointer;
             transition: 0.3s;
         }
 
-        .boton-volver:hover {
-            background-color: #e6b800;
-            transform: scale(1.03);
+            .boton-volver:hover {
+                background-color: #e6b800;
+                transform: scale(1.03);
+            }
+
+        /* Scroll horizontal en tabla si es necesario */
+        .scroll-tabla {
+            overflow-x: auto;
         }
+
 
         .filtro {
             margin-top: 20px;
             font-size: 18px;
         }
 
-        .filtro select {
-            height: 28px;
-            width: 220px;
-            font-size: 16px;
-        }
+            .filtro select {
+                height: 28px;
+                width: 220px;
+                font-size: 16px;
+            }
 
         .scroll-tabla {
             overflow-x: auto;
@@ -129,60 +145,61 @@
             gap: 20px;
         }
 
-        .botones-aceptar-denegar asp\:ImageButton {
-            width: 100px;
-            height: 36px;
-        }
+            .botones-aceptar-denegar asp\:ImageButton {
+                width: 100px;
+                height: 36px;
+            }
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
         <div class="barra-superior">Información de Reportes</div>
 
-      
 
-            <div class="contenido">
-                <div class="panel scroll-tabla">
-                    <table class="tabla">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Categoría</th>
-                                <th>Unidad de medida</th>
-                                <th>Cantidad Solicitada</th>
-                                <th>Descripción</th>
-                                <th>Prioridad</th>
-                                <th>Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>#123</td>
-                                <td>Papelería</td>
-                                <td>Caja</td>
-                                <td>3</td>
-                                <td>Caja de hojas</td>
-                                <td>Alta</td>
-                                <td><asp:Label ID="Label1" runat="server" CssClass="estado estado-procesando" Text="Procesando"></asp:Label></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
 
-                <div class="filtro">
-                    Filtrar por rango de: 
+        <div class="contenido">
+            <div class="panel scroll-tabla">
+                <table class="tabla">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Categoría</th>
+                            <th>Unidad de medida</th>
+                            <th>Cantidad Solicitada</th>
+                            <th>Descripción</th>
+                            <th>Prioridad</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#123</td>
+                            <td>Papelería</td>
+                            <td>Caja</td>
+                            <td>3</td>
+                            <td>Caja de hojas</td>
+                            <td>Alta</td>
+                            <td>
+                                <asp:Label ID="Label1" runat="server" CssClass="estado estado-procesando" Text="Procesando"></asp:Label></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="filtro">
+                Filtrar por rango de: 
                     <asp:DropDownList ID="DropDownList1" runat="server">
                         <asp:ListItem>₡100 000</asp:ListItem>
                         <asp:ListItem>₡100 000 - ₡1 000 000</asp:ListItem>
                         <asp:ListItem>+₡1 000 000</asp:ListItem>
                     </asp:DropDownList>
-                </div>
-
-             
-
-                <asp:Button ID="Button1" runat="server" CssClass="boton-volver" OnClick="Button1_Click" Text="⇦" />
             </div>
-      
+
+
+
+            <asp:Button ID="Button1" runat="server" CssClass="boton-volver" OnClick="Button1_Click" Text="⇦" />
+        </div>
+
     </form>
 </body>
 </html>
