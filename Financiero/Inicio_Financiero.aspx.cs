@@ -12,7 +12,7 @@ namespace Proyecto_Final_Diseño_
 
         protected void ImageButton2_Click(object sender, ImageClickEventArgs e)
         {
-            Response.Redirect("Login.aspx");
+            Response.Redirect("../Login.aspx");
         }
 
         protected void ImageButton3_Click1(object sender, ImageClickEventArgs e)
