@@ -34,5 +34,6 @@ namespace Proyecto_Final_Diseño_
         {
             Response.Redirect("../Login.aspx");
         }
+        /*Suban el salario porfavor*/
     }
 }
