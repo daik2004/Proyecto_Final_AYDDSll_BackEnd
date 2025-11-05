@@ -67,16 +67,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Administrador_TI_Inicio.aspx" />
-    <Content Include="Administrador_TI_Estado.aspx" />
-    <Content Include="Administrador_TI_Rol.aspx" />
-    <Content Include="Administrador_Usuario.aspx" />
-    <Content Include="Comprador_Infomacion.aspx" />
-    <Content Include="Comprador_Inicio.aspx" />
-    <Content Include="Comprador_Solicitudes.aspx" />
-    <Content Include="Financiero_Gestión.aspx" />
-    <Content Include="Financiero_Reportes.aspx" />
-    <Content Include="Gestion de Reportes.aspx" />
+    <Content Include="Administrador\Administrador_TI_Inicio.aspx" />
+    <Content Include="Administrador\Administrador_TI_Estado.aspx" />
+    <Content Include="Administrador\Administrador_TI_Rol.aspx" />
+    <Content Include="Administrador\Administrador_Usuario.aspx" />
+    <Content Include="Comprador\Comprador_Infomacion.aspx" />
+    <Content Include="Comprador\Comprador_Inicio.aspx" />
+    <Content Include="Comprador\Comprador_Solicitudes.aspx" />
+    <Content Include="Financiero\Financiero_Gestión.aspx" />
+    <Content Include="Financiero\Financiero_Reportes.aspx" />
+    <Content Include="Jefe\Gestion de Reportes.aspx" />
     <Content Include="imagenes\fotos\2117554.jpg" />
     <Content Include="imagenes\fotos\Aceptar.png" />
     <Content Include="imagenes\fotos\Adm_TI.png" />
@@ -99,105 +99,103 @@
     <Content Include="Imagenes_\requisiciones.png" />
     <Content Include="Imagenes_\salir.png" />
     <Content Include="Imagenes_\usuario.png" />
-    <Content Include="Informacion_Jefe.aspx" />
-    <Content Include="Inicio_Financiero.aspx" />
-    <Content Include="Jefe_Inicio.aspx" />
+    <Content Include="Jefe\Informacion_Jefe.aspx" />
+    <Content Include="Financiero\Inicio_Financiero.aspx" />
+    <Content Include="Jefe\Jefe_Inicio.aspx" />
     <Content Include="Login.aspx" />
-    <Content Include="Prueba.aspx" />
-    <Content Include="Prueba2.aspx" />
     <Content Include="Roles_Temp.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Administrador_TI_Inicio.aspx.cs">
+    <Compile Include="Administrador\Administrador_TI_Inicio.aspx.cs">
       <DependentUpon>Administrador_TI_Inicio.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Administrador_TI_Inicio.aspx.designer.cs">
+    <Compile Include="Administrador\Administrador_TI_Inicio.aspx.designer.cs">
       <DependentUpon>Administrador_TI_Inicio.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Administrador_TI_Estado.aspx.cs">
+    <Compile Include="Administrador\Administrador_TI_Estado.aspx.cs">
       <DependentUpon>Administrador_TI_Estado.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Administrador_TI_Estado.aspx.designer.cs">
+    <Compile Include="Administrador\Administrador_TI_Estado.aspx.designer.cs">
       <DependentUpon>Administrador_TI_Estado.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Administrador_TI_Rol.aspx.cs">
+    <Compile Include="Administrador\Administrador_TI_Rol.aspx.cs">
       <DependentUpon>Administrador_TI_Rol.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Administrador_TI_Rol.aspx.designer.cs">
+    <Compile Include="Administrador\Administrador_TI_Rol.aspx.designer.cs">
       <DependentUpon>Administrador_TI_Rol.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Administrador_Usuario.aspx.cs">
+    <Compile Include="Administrador\Administrador_Usuario.aspx.cs">
       <DependentUpon>Administrador_Usuario.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Administrador_Usuario.aspx.designer.cs">
+    <Compile Include="Administrador\Administrador_Usuario.aspx.designer.cs">
       <DependentUpon>Administrador_Usuario.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Comprador_Infomacion.aspx.cs">
+    <Compile Include="Comprador\Comprador_Infomacion.aspx.cs">
       <DependentUpon>Comprador_Infomacion.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Comprador_Infomacion.aspx.designer.cs">
+    <Compile Include="Comprador\Comprador_Infomacion.aspx.designer.cs">
       <DependentUpon>Comprador_Infomacion.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Comprador_Inicio.aspx.cs">
+    <Compile Include="Comprador\Comprador_Inicio.aspx.cs">
       <DependentUpon>Comprador_Inicio.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Comprador_Inicio.aspx.designer.cs">
+    <Compile Include="Comprador\Comprador_Inicio.aspx.designer.cs">
       <DependentUpon>Comprador_Inicio.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Comprador_Solicitudes.aspx.cs">
+    <Compile Include="Comprador\Comprador_Solicitudes.aspx.cs">
       <DependentUpon>Comprador_Solicitudes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Comprador_Solicitudes.aspx.designer.cs">
+    <Compile Include="Comprador\Comprador_Solicitudes.aspx.designer.cs">
       <DependentUpon>Comprador_Solicitudes.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Financiero_Gestión.aspx.cs">
+    <Compile Include="Financiero\Financiero_Gestión.aspx.cs">
       <DependentUpon>Financiero_Gestión.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Financiero_Gestión.aspx.designer.cs">
+    <Compile Include="Financiero\Financiero_Gestión.aspx.designer.cs">
       <DependentUpon>Financiero_Gestión.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Financiero_Reportes.aspx.cs">
+    <Compile Include="Financiero\Financiero_Reportes.aspx.cs">
       <DependentUpon>Financiero_Reportes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Financiero_Reportes.aspx.designer.cs">
+    <Compile Include="Financiero\Financiero_Reportes.aspx.designer.cs">
       <DependentUpon>Financiero_Reportes.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Gestion de Reportes.aspx.cs">
+    <Compile Include="Jefe\Gestion de Reportes.aspx.cs">
       <DependentUpon>Gestion de Reportes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Gestion de Reportes.aspx.designer.cs">
+    <Compile Include="Jefe\Gestion de Reportes.aspx.designer.cs">
       <DependentUpon>Gestion de Reportes.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Informacion_Jefe.aspx.cs">
+    <Compile Include="Jefe\Informacion_Jefe.aspx.cs">
       <DependentUpon>Informacion_Jefe.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Informacion_Jefe.aspx.designer.cs">
+    <Compile Include="Jefe\Informacion_Jefe.aspx.designer.cs">
       <DependentUpon>Informacion_Jefe.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Inicio_Financiero.aspx.cs">
+    <Compile Include="Financiero\Inicio_Financiero.aspx.cs">
       <DependentUpon>Inicio_Financiero.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Inicio_Financiero.aspx.designer.cs">
+    <Compile Include="Financiero\Inicio_Financiero.aspx.designer.cs">
       <DependentUpon>Inicio_Financiero.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Jefe_Inicio.aspx.cs">
+    <Compile Include="Jefe\Jefe_Inicio.aspx.cs">
       <DependentUpon>Jefe_Inicio.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Jefe_Inicio.aspx.designer.cs">
+    <Compile Include="Jefe\Jefe_Inicio.aspx.designer.cs">
       <DependentUpon>Jefe_Inicio.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
@@ -208,20 +206,6 @@
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Prueba.aspx.cs">
-      <DependentUpon>Prueba.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Prueba.aspx.designer.cs">
-      <DependentUpon>Prueba.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Prueba2.aspx.cs">
-      <DependentUpon>Prueba2.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Prueba2.aspx.designer.cs">
-      <DependentUpon>Prueba2.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Roles_Temp.aspx.cs">
       <DependentUpon>Roles_Temp.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
