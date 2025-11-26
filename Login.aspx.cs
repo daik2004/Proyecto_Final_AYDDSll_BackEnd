@@ -23,21 +23,21 @@ namespace Proyecto_Final_Diseño_
 
             Password = int.Parse(txtContrasena.Text);
 
-            if (user == "Jhosua" && Password == 1234)
+            if (user == "Anderson" && Password == 1234)
             {
-                Response.Redirect("Comprador_Inicio.aspx");
+                Response.Redirect("~/Comprador/Comprador_Inicio.aspx");
             }
-            else if (user =="Jostin" && Password == 1234)
+            else if (user =="Danny" && Password == 1234)
             {
-                Response.Redirect("Jefe_Inicio.aspx");
+                Response.Redirect("~/Jefe/Jefe_Inicio.aspx");
             }
-            else if (user == "Danny" && Password == 1234)
+            else if (user == "Aaron" && Password == 1234)
             {
-                Response.Redirect("Inicio_Financiero.aspx");
+                Response.Redirect("~/Financiero/Inicio_Financiero.aspx");
             }
             else if (user == "Daimary")
             {
-                Response.Redirect("Administrador_TI_Inicio.aspx");
+                Response.Redirect("~/Administrador/Administrador_TI_Inicio.aspx");
             }
             else
             {
