@@ -25,8 +25,8 @@ namespace Proyecto_Final_Diseño_
 		protected void Button1_Click(object sender, EventArgs e)
 		{
 			// Validaciones básicas
-			if (string.IsNullOrWhiteSpace(TextBox2.Text) ||
-				string.IsNullOrWhiteSpace(TextBox4.Text))
+			if (string.IsNullOrWhiteSpace(txtCantidad.Text) ||
+				string.IsNullOrWhiteSpace(txtMonto.Text))
 			{
 				return;
 			}
