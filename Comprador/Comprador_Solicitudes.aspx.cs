@@ -59,6 +59,7 @@ namespace Proyecto_Final_Diseño_
 
 				con.Open();
 				int idRequisicion = Convert.ToInt32(cmd.ExecuteScalar());
+				lblMensaje.Text = "Requisión creada correctamente";
 
 				// Registrar auditoría
 				RegistrarAuditoria(idComprador, idRequisicion);
@@ -96,6 +97,7 @@ namespace Proyecto_Final_Diseño_
 			ddlUnidad.SelectedIndex = 0;
 			ddlCategoria.SelectedIndex = 0;
 			ddlPrioridad.SelectedIndex = 0;
+
 		}
 
 		protected void Button2_Click(object sender, EventArgs e)
