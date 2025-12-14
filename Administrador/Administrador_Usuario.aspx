@@ -8,12 +8,13 @@
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
             background-color: #4D6C8B;
         }
 
+        /* Barra superior */
         .barra-superior {
-            height: 60px;
+            height: 70px;
             background-color: #89C4F4;
             display: flex;
             align-items: center;
@@ -21,130 +22,177 @@
             font-size: 1.8rem;
             font-weight: bold;
             color: #fff;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
         }
 
+        /* Contenedor general */
         .contenedor {
             display: flex;
-            min-height: calc(100vh - 60px);
+            justify-content: center;
+            padding: 40px 20px;
         }
 
-
-        /* Panel principal */
-        .panel-mejorado {
-            flex: 1;
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            background-color: #4D6C8B;
-            color: #fff;
+        /* Tarjeta principal */
+        .card {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 950px;
+            padding: 35px 40px;
+            border-radius: 14px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
         }
 
-        .form-row {
-            display: flex;
+            .card h2 {
+                margin-top: 0;
+                margin-bottom: 25px;
+                color: #2C3E50;
+                text-align: center;
+                font-size: 1.6rem;
+            }
+
+        /* Grid del formulario */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
-            flex-wrap: wrap;
         }
 
         .form-group {
             display: flex;
             flex-direction: column;
-            flex: 1 1 300px;
         }
 
-        .form-group label {
-            font-weight: bold;
-            margin-bottom: 6px;
-            font-size: 1.1rem;
-        }
+            .form-group label {
+                font-weight: bold;
+                margin-bottom: 6px;
+                color: #2C3E50;
+            }
 
         .input-text {
             padding: 10px 12px;
             border-radius: 8px;
             border: 1px solid #ccc;
             font-size: 1rem;
-            color: black;
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
 
-        .botones-panel {
+            .input-text:focus {
+                border-color: #89C4F4;
+                box-shadow: 0 0 6px rgba(137,196,244,0.6);
+                outline: none;
+            }
+
+        /* Botones */
+        .botones {
             display: flex;
+            justify-content: center;
             gap: 20px;
-            margin-top: 20px;
+            margin-top: 30px;
         }
 
-        .btn-accion {
-            background-color: #FFCC00;
-            border: none;
-            border-radius: 8px;
-            padding: 12px 25px;
+        .btn {
+            padding: 12px 30px;
+            font-size: 1rem;
             font-weight: bold;
+            border-radius: 8px;
+            border: none;
             cursor: pointer;
             transition: 0.3s;
+        }
+
+        .btn-primario {
+            background-color: #FFCC00;
             color: #000;
-            font-size: 1rem;
         }
 
-        .btn-accion:hover {
-            background-color: #e6b800;
+            .btn-primario:hover {
+                background-color: #e6b800;
+                transform: translateY(-1px);
+            }
+
+        .btn-secundario {
+            background-color: #2C3E50;
+            color: #fff;
         }
 
+            .btn-secundario:hover {
+                background-color: #1f2d3a;
+            }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 6px;
+            display: block;
+        }
     </style>
 </head>
+
 <body>
     <form id="form1" runat="server">
 
-        <div class="barra-superior">Definir un Usuario</div>
+        <div class="barra-superior">Definir Usuario</div>
 
         <div class="contenedor">
-         
-            <!-- Panel de usuario -->
-            <div class="panel-mejorado">
-                <div class="form-row">
+            <div class="card">
+
+                <h2>Registro de Usuario del Sistema</h2>
+
+                <div class="form-grid">
+
                     <div class="form-group">
-                        <label for="TextBox5">Nombre</label>
-                        <asp:TextBox ID="TextBox5" runat="server" CssClass="input-text"></asp:TextBox>
+                        <label>Nombre</label>
+                        <asp:TextBox ID="TextBox5" runat="server" CssClass="input-text" />
                     </div>
+
                     <div class="form-group">
-                        <label for="TextBox10">Departamento</label>
-                        <asp:TextBox ID="TextBox10" runat="server" CssClass="input-text"></asp:TextBox>
+                        <label>Apellidos</label>
+                        <asp:TextBox ID="TextBox6" runat="server" CssClass="input-text" />
                     </div>
+
+                    <div class="form-group">
+                        <label>Cédula</label>
+                        <asp:TextBox ID="TextBox7" runat="server" CssClass="input-text" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Usuario</label>
+                        <asp:TextBox ID="txtUser" runat="server" CssClass="input-text" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Correo electrónico</label>
+                        <asp:TextBox ID="TextBox8" runat="server" CssClass="input-text" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Departamento</label>
+                        <asp:TextBox ID="TextBox10" runat="server" CssClass="input-text" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Fecha de nacimiento</label>
+                        <asp:TextBox ID="TextBox9" runat="server" CssClass="input-text" TextMode="Date" />
+                    </div>
+
+
+
                 </div>
 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="TextBox6">Apellidos</label>
-                        <asp:TextBox ID="TextBox6" runat="server" CssClass="input-text"></asp:TextBox>
-                    </div>
-                    <div class="form-group">
-                        <label for="TextBox11">ID Asignado</label>
-                        <asp:TextBox ID="TextBox11" runat="server" CssClass="input-text"></asp:TextBox>
-                    </div>
+                <div class="botones">
+                    <asp:Button ID="Button1" runat="server" Text="Crear Usuario"
+                        CssClass="btn btn-primario" OnClick="Button1_Click" />
+
+                    <asp:Button ID="Button3" runat="server" Text="⇦ Volver"
+                        CssClass="btn btn-secundario" OnClick="Button3_Click" />
+                </div>
+                <div>
+                    <asp:Label ID="lblMensaje" runat="server" CssClass="mensaje"></asp:Label>
                 </div>
 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="TextBox7">Cédula</label>
-                        <asp:TextBox ID="TextBox7" runat="server" CssClass="input-text"></asp:TextBox>
-                    </div>
-                    <div class="form-group">
-                        <label for="TextBox8">Correo electrónico</label>
-                        <asp:TextBox ID="TextBox8" runat="server" CssClass="input-text"></asp:TextBox>
-                    </div>
-                </div>
 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="TextBox9">Fecha de Nacimiento</label>
-                        <asp:TextBox ID="TextBox9" runat="server" CssClass="input-text"></asp:TextBox>
-                    </div>
-                </div>
-
-                <div class="botones-panel">
-                    <asp:Button ID="Button1" runat="server" Text="Crear" OnClick="Button1_Click" CssClass="btn-accion" />
-                    <asp:Button ID="Button3" runat="server" Text="⇦" OnClick="Button3_Click" CssClass="btn-accion" />
-                </div>
             </div>
         </div>
+
     </form>
 </body>
 </html>
