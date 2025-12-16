@@ -6,151 +6,229 @@
 <head runat="server">
     <title>Gestión de Reportes - Jefe</title>
 
-    <style>
+       <style>
         body {
             margin: 0;
-            font-family: Arial;
-            background-color: #f4f6f9;
+            font-family: Arial, sans-serif;
+            background-color: #4D6C8B;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            height: 70px;
+            background-color: #89C4F4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 26px;
+            font-weight: bold;
+            letter-spacing: 1px;
         }
 
         .contenedor {
+            flex: 1;
+            padding: 40px;
             display: flex;
             justify-content: center;
-            padding: 30px;
+            align-items: flex-start;
         }
 
-        .contenido {
+        .card {
+            background-color: #4D6C8B;
             width: 100%;
             max-width: 1200px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .panel {
-            background: #fff;
-            padding: 20px;
-            width: 100%;
+            padding: 40px;
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            margin-bottom: 25px;
+            color: white;
         }
 
-        .tabla {
+        .seccion {
+            font-size: 20px;
+            font-weight: bold;
+            border-bottom: 2px solid #FFCC00;
+            padding-bottom: 6px;
+            margin-bottom: 20px;
+        }
+
+        /* GRID */
+        .gridview {
             width: 100%;
             border-collapse: collapse;
+            background-color: white;
+            color: #333;
+            margin-bottom: 30px;
         }
 
-        .tabla th {
-            background-color: #003366;
+        .gridview th {
+            background-color: #89C4F4;
             color: white;
             padding: 10px;
+            text-align: left;
         }
 
-        .tabla td {
-            padding: 8px;
+        .gridview td {
+            padding: 10px;
             border-bottom: 1px solid #ccc;
-            text-align: center;
         }
 
-        .estado-pendiente { color: orange; font-weight: bold; }
-        .estado-aprobada { color: green; font-weight: bold; }
-        .estado-rechazada { color: red; font-weight: bold; }
-
-        .detalle {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+        .gridview a {
+            color: #4D6C8B;
+            font-weight: bold;
+            text-decoration: none;
         }
 
-        .botones {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 15px;
+        .gridview a:hover {
+            text-decoration: underline;
         }
 
-        button, .aspBtn {
-            padding: 10px 25px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
+        /* ESTADOS */
+        .estado-pendiente {
+            color: orange;
             font-weight: bold;
         }
 
-        .aprobar { background-color: #28a745; color: white; }
-        .rechazar { background-color: #dc3545; color: white; }
+        .estado-aprobada {
+            color: green;
+            font-weight: bold;
+        }
+
+        .estado-rechazada {
+            color: red;
+            font-weight: bold;
+        }
+
+        /* PANEL DETALLE */
+        .detalle {
+            background-color: #3E5875;
+            padding: 25px;
+            border-radius: 10px;
+        }
+
+        .detalle p {
+            margin: 8px 0;
+        }
+
+        textarea {
+            width: 100%;
+            height: 90px;
+            border-radius: 6px;
+            border: none;
+            padding: 8px;
+            resize: none;
+        }
+
+        .acciones {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            width: 220px;
+            height: 50px;
+            margin: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+            background-color: #FFCC00;
+        }
+
+        .btn:hover {
+            background-color: #e6b800;
+            transform: scale(1.03);
+        }
     </style>
 </head>
 
 <body>
 <form id="form1" runat="server">
 
-<div class="contenedor">
-<div class="contenido">
-
-    <!-- TABLA -->
-    <div class="panel">
-        <asp:GridView ID="gvRequisiciones" runat="server"
-            AutoGenerateColumns="False"
-            CssClass="tabla"
-            DataKeyNames="id_Requisicion"
-            OnSelectedIndexChanged="gvRequisiciones_SelectedIndexChanged">
-
-            <Columns>
-                <asp:CommandField ShowSelectButton="true" SelectText="Ver" />
-
-                <asp:BoundField DataField="id_Requisicion" HeaderText="ID" />
-
-                <asp:BoundField DataField="Fecha" HeaderText="Fecha" />
-
-                <asp:TemplateField HeaderText="Monto">
-                    <ItemTemplate>
-                        <asp:Label ID="lblMontoGrid" runat="server"
-                            Text='<%# Eval("Monto") %>' />
-                    </ItemTemplate>
-                </asp:TemplateField>
-
-                <asp:TemplateField HeaderText="Estado">
-                    <ItemTemplate>
-                        <asp:Label ID="lblEstadoGrid" runat="server"
-                            Text='<%# Eval("Estado") %>' />
-                    </ItemTemplate>
-                </asp:TemplateField>
-            </Columns>
-
-        </asp:GridView>
+    <div class="header">
+        Gestión de Requisiciones
     </div>
 
-    <!-- DETALLE -->
-    <asp:Panel ID="pnlDetalle" runat="server" CssClass="panel" Visible="false">
-        <div class="detalle">
-            <strong>ID Requisición:</strong>
-            <asp:Label ID="lblId" runat="server" />
+    <div class="contenedor">
+        <div class="card">
 
-            <strong>Monto:</strong>
-            <asp:Label ID="lblMonto" runat="server" />
+            <div class="seccion">Requisiciones pendientes de aprobación</div>
 
-            <strong>Observaciones:</strong>
-            <asp:TextBox ID="txtObservaciones" runat="server"
-                TextMode="MultiLine" Rows="4" />
+            <!-- TABLA -->
+            <asp:GridView ID="gvRequisiciones" runat="server"
+                CssClass="gridview"
+                AutoGenerateColumns="False"
+                DataKeyNames="id_Requisicion"
+                OnSelectedIndexChanged="gvRequisiciones_SelectedIndexChanged">
 
-            <div class="botones">
-                <asp:Button ID="btnAprobar" runat="server"
-                    CssClass="aspBtn aprobar"
-                    Text="Aprobar"
-                    OnClick="btnAprobar_Click" />
+                <Columns>
 
-                <asp:Button ID="btnRechazar" runat="server"
-                    CssClass="aspBtn rechazar"
-                    Text="Rechazar"
-                    OnClick="btnRechazar_Click" />
-            </div>
+                    <asp:CommandField ShowSelectButton="true" SelectText="Ver" />
+
+                    <asp:BoundField DataField="id_Requisicion" HeaderText="ID" />
+
+                    <asp:BoundField DataField="Fecha_Creacion"
+                        HeaderText="Fecha"
+                        DataFormatString="{0:dd/MM/yyyy}" />
+
+                    <asp:BoundField DataField="Categoria" HeaderText="Categoría" />
+
+                    <asp:BoundField DataField="Descripcion" HeaderText="Descripción" />
+
+                    <asp:BoundField DataField="CantidadSolicitada" HeaderText="Cantidad" />
+
+                    <asp:BoundField DataField="UnidadMedida" HeaderText="Unidad" />
+
+                    <asp:BoundField DataField="MotivoSolicitud" HeaderText="Motivo" />
+
+                    <asp:BoundField DataField="Monto"
+                        HeaderText="Monto"
+                        DataFormatString="₡{0:N0}" />
+
+                    <asp:TemplateField HeaderText="Estado">
+                        <ItemTemplate>
+                            <asp:Label ID="lblEstadoGrid" runat="server"
+                                Text='<%# Eval("Estado") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
+                </Columns>
+            </asp:GridView>
+
+            <!-- DETALLE -->
+            <asp:Panel ID="pnlDetalle" runat="server" CssClass="detalle" Visible="false">
+
+                <div class="seccion">Decisión del jefe</div>
+
+                <p><strong>ID Requisición:</strong>
+                    <asp:Label ID="lblId" runat="server" /></p>
+
+                <p><strong>Monto:</strong>
+                    <asp:Label ID="lblMonto" runat="server" /></p>
+
+                <p><strong>Observaciones:</strong></p>
+                <asp:TextBox ID="txtObservaciones" runat="server"
+                    TextMode="MultiLine"></asp:TextBox>
+
+                <div class="acciones">
+                    <asp:Button ID="btnAprobar" runat="server"
+                        Text="Aprobar"
+                        CssClass="btn"
+                        OnClick="btnAprobar_Click" />
+
+                    <asp:Button ID="btnRechazar" runat="server"
+                        Text="Rechazar"
+                        CssClass="btn"
+                        OnClick="btnRechazar_Click" />
+                </div>
+
+            </asp:Panel>
+
         </div>
-    </asp:Panel>
-
-</div>
-</div>
+    </div>
 
 </form>
 </body>
