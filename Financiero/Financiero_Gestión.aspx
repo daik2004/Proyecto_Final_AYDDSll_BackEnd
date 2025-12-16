@@ -3,103 +3,211 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Gestión de Requisiciones - Financiero</title>
+    <title>Gestión de Requisiciones</title>
+
     <style>
         body {
-            background-color: #121212;
-            color: white;
-            font-family: Arial;
-            padding: 40px;
+            margin: 0;
+            padding: 0;
+            background-color: #4D6C8B;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
-        .contenedor {
-            width: 90%;
-            margin: auto;
-            background-color: #1f1f1f;
-            padding: 30px;
-            border-radius: 10px;
+        /* Barra superior */
+        .barra-superior {
+            height: 60px;
+            background-color: #89C4F4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-        h2 {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .btn {
-            margin: 10px 10px 10px 0;
-            padding: 10px 20px;
-            background-color: #00c853;
-            color: white;
-            border: none;
+        .barra-superior span {
+            font-size: 28px;
             font-weight: bold;
-            border-radius: 5px;
+            color: #2C3E50;
+        }
+
+        /* Contenedor principal */
+        .contenedor {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Contenido */
+        .contenido {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow-x: auto;
+        }
+
+        /* Panel */
+        .panel {
+            background-color: #fff;
+            padding: 30px;
+            width: 100%;
+            max-width: 1200px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            margin-bottom: 20px;
+        }
+
+        /* GridView como tabla */
+        .tabla {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        .tabla th, .tabla td {
+            padding: 12px;
+            font-size: 16px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .tabla th {
+            background-color: #f0f0f0;
+            color: #2C3E50;
+            font-weight: bold;
+        }
+
+        /* TextBox justificación */
+        .txtJustificacion {
+            width: 100%;
+            height: 80px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            resize: none;
+        }
+
+        /* Botones */
+        .btn {
+            width: 160px;
+            height: 45px;
+            background-color: #FFCC00;
+            border: none;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
         }
 
         .btn:hover {
-            background-color: #00e676;
+            background-color: #e6b800;
+            transform: scale(1.03);
         }
 
-        .grid {
-            margin-top: 30px;
-        }
-
-        .volver {
-            margin-top: 20px;
+        /* Resultado */
+        .resultado {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2ECC71;
             text-align: center;
         }
 
-        .volver a {
-            color: #00e676;
-            text-decoration: none;
+        /* Botón volver */
+        .boton-volver {
+            margin: 20px auto;
+            display: block;
+            width: 200px;
+            height: 45px;
+            background-color: #FFCC00;
+            border: none;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
         }
 
-        .resultado {
-            margin-top: 20px;
-            font-size: 16px;
-            color: lightgreen;
+        .boton-volver:hover {
+            background-color: #e6b800;
+            transform: scale(1.03);
         }
 
-        .txtJustificacion {
-            margin-top: 20px;
-            width: 100%;
-            height: 60px;
+        .scroll-tabla {
+            overflow-x: auto;
         }
     </style>
 </head>
+
 <body>
-    <form id="form1" runat="server">
-        <div class="contenedor">
-            <h2>Gestión de Requisiciones</h2>
+<form id="form1" runat="server">
 
-            <asp:GridView ID="gvRequisiciones" runat="server" AutoGenerateColumns="False"
-                CssClass="grid" OnSelectedIndexChanged="gvRequisiciones_SelectedIndexChanged"
-                DataKeyNames="id_Requisicion">
-                <Columns>
-                    <asp:CommandField ShowSelectButton="True" SelectText="Seleccionar" />
-                    <asp:BoundField DataField="id_Requisicion" HeaderText="ID Requisición" />
-                    <asp:BoundField DataField="Solicitante" HeaderText="Solicitante" />
-                    <asp:BoundField DataField="Descripcion" HeaderText="Descripción" />
-                    <asp:BoundField DataField="CantidadSolicitada" HeaderText="Cantidad" />
-                    <asp:BoundField DataField="Monto" HeaderText="Monto" DataFormatString="₡{0}" />
-                    <asp:BoundField DataField="Prioridad" HeaderText="Prioridad" />
-                    <asp:BoundField DataField="Estado" HeaderText="Estado" />
-                </Columns>
-            </asp:GridView>
+    <!-- Barra superior -->
+    <div class="barra-superior">
+        <span>Gestión de Requisiciones</span>
+    </div>
 
-            <asp:TextBox ID="txtJustificacion" runat="server" CssClass="txtJustificacion" Placeholder="Justificación..." TextMode="MultiLine" />
+    <!-- Contenedor -->
+    <div class="contenedor">
+        <div class="contenido">
 
-            <div style="margin-top:15px;">
-                <asp:Button ID="btnAprobar" runat="server" CssClass="btn" Text="Aprobar" OnClick="btnAprobar_Click" />
-                <asp:Button ID="btnDenegar" runat="server" CssClass="btn" Text="Denegar" OnClick="btnDenegar_Click" />
+            <!-- Panel tabla -->
+            <div class="panel scroll-tabla">
+                <asp:GridView ID="gvRequisiciones" runat="server"
+                    AutoGenerateColumns="False"
+                    CssClass="tabla"
+                    DataKeyNames="id_Requisicion"
+                    OnSelectedIndexChanged="gvRequisiciones_SelectedIndexChanged">
+
+                    <Columns>
+                        <asp:CommandField ShowSelectButton="True" SelectText="Seleccionar" />
+                        <asp:BoundField DataField="id_Requisicion" HeaderText="ID" />
+                        <asp:BoundField DataField="Solicitante" HeaderText="Solicitante" />
+                        <asp:BoundField DataField="Descripcion" HeaderText="Descripción" />
+                        <asp:BoundField DataField="CantidadSolicitada" HeaderText="Cantidad" />
+                        <asp:BoundField DataField="Monto" HeaderText="Monto" DataFormatString="₡{0:N0}" />
+                        <asp:BoundField DataField="Prioridad" HeaderText="Prioridad" />
+                        <asp:BoundField DataField="Estado" HeaderText="Estado" />
+                    </Columns>
+                </asp:GridView>
             </div>
 
+            <!-- Panel justificación -->
+            <div class="panel">
+                <strong>Justificación:</strong><br /><br />
+                <asp:TextBox ID="txtJustificacion" runat="server"
+                    CssClass="txtJustificacion"
+                    TextMode="MultiLine"
+                    Placeholder="Ingrese la justificación..." />
+            </div>
+
+            <!-- Panel botones -->
+            <div class="panel" style="display:flex; gap:20px; justify-content:center;">
+                <asp:Button ID="btnAprobar" runat="server"
+                    CssClass="btn"
+                    Text="Aprobar"
+                    OnClick="btnAprobar_Click" />
+
+                <asp:Button ID="btnDenegar" runat="server"
+                    CssClass="btn"
+                    Text="Denegar"
+                    OnClick="btnDenegar_Click" />
+            </div>
+
+            <!-- Resultado -->
             <asp:Label ID="lblResultados" runat="server" CssClass="resultado" />
 
-            <div class="volver">
-                <a href="Inicio_Financiero.aspx">← Volver al Menú</a>
-            </div>
+            <!-- Botón volver -->
+            <asp:Button ID="Button1" runat="server"
+                CssClass="boton-volver"
+                Text="⇦ Volver"
+                PostBackUrl="Inicio_Financiero.aspx" />
+
         </div>
-    </form>
+    </div>
+
+</form>
 </body>
 </html>
-

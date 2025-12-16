@@ -44,9 +44,12 @@ namespace Proyecto_Final_Diseño_
 
         protected void gvRequisiciones_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int idRequisicion = Convert.ToInt32(gvRequisiciones.SelectedDataKey.Value);
-            Session["RequisicionSeleccionada"] = idRequisicion;
-            lblResultados.Text = "Requisición seleccionada: " + idRequisicion;
+            if (gvRequisiciones.SelectedDataKey != null)
+            {
+                int idRequisicion = Convert.ToInt32(gvRequisiciones.SelectedDataKey.Value);
+                Session["RequisicionSeleccionada"] = idRequisicion;
+                lblResultados.Text = "Requisición seleccionada: " + idRequisicion;
+            }
         }
 
         protected void btnAprobar_Click(object sender, EventArgs e)
@@ -69,39 +72,56 @@ namespace Proyecto_Final_Diseño_
 
         private void ActualizarRequisicion(int id, string decision)
         {
-            string justificacion = txtJustificacion.Text;
-
-            using (SqlConnection con = new SqlConnection(connectionString))
+            int idFinanciero = ObtenerIdFinanciero();
+            if (idFinanciero == 0)
             {
-                con.Open();
-
-                // Actualiza estado
-                string updateQuery = "UPDATE Requisicion SET Estado=@estado WHERE id_Requisicion=@id";
-                using (SqlCommand cmd = new SqlCommand(updateQuery, con))
-                {
-                    cmd.Parameters.AddWithValue("@estado", decision);
-                    cmd.Parameters.AddWithValue("@id", id);
-                    cmd.ExecuteNonQuery();
-                }
-
-                // Inserta registro de aprobación
-                string insertQuery = @"
-                    INSERT INTO Aprobacion (id_Requisicion, id_Aprobador, Nivel, FechaAprobacion, Decision, Observaciones)
-                    VALUES (@idR, @idA, 'Financiero', GETDATE(), @decision, @obs)";
-
-                using (SqlCommand cmd = new SqlCommand(insertQuery, con))
-                {
-                    cmd.Parameters.AddWithValue("@idR", id);
-                    cmd.Parameters.AddWithValue("@idA", ObtenerIdFinanciero());
-                    cmd.Parameters.AddWithValue("@decision", decision);
-                    cmd.Parameters.AddWithValue("@obs", justificacion);
-                    cmd.ExecuteNonQuery();
-                }
+                lblResultados.Text = "Error: No se pudo determinar el aprobador financiero.";
+                return;
             }
 
-            lblResultados.Text = $"Requisición {id} {decision.ToLower()} correctamente.";
-            txtJustificacion.Text = "";
-            CargarRequisiciones();
+            string justificacion = string.IsNullOrEmpty(txtJustificacion.Text) ? null : txtJustificacion.Text;
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    con.Open();
+                    using (SqlTransaction tran = con.BeginTransaction())
+                    {
+                        // Actualiza estado de la requisición
+                        string updateQuery = "UPDATE Requisicion SET Estado=@estado WHERE id_Requisicion=@id";
+                        using (SqlCommand cmd = new SqlCommand(updateQuery, con, tran))
+                        {
+                            cmd.Parameters.AddWithValue("@estado", decision);
+                            cmd.Parameters.AddWithValue("@id", id);
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        // Inserta registro de aprobación
+                        string insertQuery = @"
+                            INSERT INTO Aprobacion (id_Requisicion, id_Aprobador, Nivel, FechaAprobacion, Decision, Observaciones)
+                            VALUES (@idR, @idA, 'Financiero', GETDATE(), @decision, @obs)";
+                        using (SqlCommand cmd = new SqlCommand(insertQuery, con, tran))
+                        {
+                            cmd.Parameters.AddWithValue("@idR", id);
+                            cmd.Parameters.AddWithValue("@idA", idFinanciero);
+                            cmd.Parameters.AddWithValue("@decision", decision);
+                            cmd.Parameters.AddWithValue("@obs", (object)justificacion ?? DBNull.Value);
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        tran.Commit();
+                    }
+                }
+
+                lblResultados.Text = $"Requisición {id} {decision.ToLower()} correctamente.";
+                txtJustificacion.Text = "";
+                CargarRequisiciones();
+            }
+            catch (Exception ex)
+            {
+                lblResultados.Text = "Error al procesar la requisición: " + ex.Message;
+            }
         }
 
         private int ObtenerIdFinanciero()
@@ -115,7 +135,11 @@ namespace Proyecto_Final_Diseño_
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
-                string query = "SELECT id_Usuario FROM Usuario WHERE Usuario=@usuario AND id_Rol=(SELECT id_Rol FROM Rol WHERE Nombre='Aprobador Financiero')";
+                string query = @"
+                    SELECT id_Usuario 
+                    FROM Usuario 
+                    WHERE Usuario=@usuario 
+                      AND id_Rol=(SELECT id_Rol FROM Rol WHERE Nombre='Aprobador Financiero')";
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
                     cmd.Parameters.AddWithValue("@usuario", usuarioLogueado);
