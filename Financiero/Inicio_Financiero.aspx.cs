@@ -20,7 +20,7 @@ namespace Proyecto_Final_Diseño_
             Response.Redirect("Financiero_Reportes.aspx");
         }
 
-        protected void ImageButton4_Click(object sender, ImageClickEventArgs e)
+        protected void ImageButton4_Click(object sender, ImageClickEventArgs e) 
         {
             Response.Redirect("Financiero_Gestión.aspx");
         }
