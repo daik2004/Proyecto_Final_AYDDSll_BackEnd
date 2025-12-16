@@ -57,7 +57,7 @@ namespace Proyecto_Final_Diseño_
             if (Session["RequisicionSeleccionada"] != null)
             {
                 int id = Convert.ToInt32(Session["RequisicionSeleccionada"]);
-                ActualizarRequisicion(id, "Aprobada");
+                ActualizarRequisicion(id, "Aprobar");
             }
         }
 
@@ -66,7 +66,7 @@ namespace Proyecto_Final_Diseño_
             if (Session["RequisicionSeleccionada"] != null)
             {
                 int id = Convert.ToInt32(Session["RequisicionSeleccionada"]);
-                ActualizarRequisicion(id, "Rechazada");
+                ActualizarRequisicion(id, "Rechazar");
             }
         }
 
@@ -81,6 +81,25 @@ namespace Proyecto_Final_Diseño_
 
             string justificacion = string.IsNullOrEmpty(txtJustificacion.Text) ? null : txtJustificacion.Text;
 
+            // Normalizar decision para tabla Aprobacion
+            string decisionAprobacion;
+            if (decision.Equals("Aprobar", StringComparison.OrdinalIgnoreCase))
+                decisionAprobacion = "Aprobado";
+            else if (decision.Equals("Rechazar", StringComparison.OrdinalIgnoreCase))
+                decisionAprobacion = "Rechazado";
+            else
+            {
+                lblResultados.Text = "Decision inválida.";
+                return;
+            }
+
+            // Normalizar estado para tabla Requisicion
+            string estadoRequisicion;
+            if (decision.Equals("Aprobar", StringComparison.OrdinalIgnoreCase))
+                estadoRequisicion = "Aprobada";
+            else
+                estadoRequisicion = "Rechazada";
+
             try
             {
                 using (SqlConnection con = new SqlConnection(connectionString))
@@ -92,20 +111,20 @@ namespace Proyecto_Final_Diseño_
                         string updateQuery = "UPDATE Requisicion SET Estado=@estado WHERE id_Requisicion=@id";
                         using (SqlCommand cmd = new SqlCommand(updateQuery, con, tran))
                         {
-                            cmd.Parameters.AddWithValue("@estado", decision);
+                            cmd.Parameters.AddWithValue("@estado", estadoRequisicion);
                             cmd.Parameters.AddWithValue("@id", id);
                             cmd.ExecuteNonQuery();
                         }
 
                         // Inserta registro de aprobación
                         string insertQuery = @"
-                            INSERT INTO Aprobacion (id_Requisicion, id_Aprobador, Nivel, FechaAprobacion, Decision, Observaciones)
-                            VALUES (@idR, @idA, 'Financiero', GETDATE(), @decision, @obs)";
+                    INSERT INTO Aprobacion (id_Requisicion, id_Aprobador, Nivel, FechaAprobacion, Decision, Observaciones)
+                    VALUES (@idR, @idA, 'Financiero', GETDATE(), @decision, @obs)";
                         using (SqlCommand cmd = new SqlCommand(insertQuery, con, tran))
                         {
                             cmd.Parameters.AddWithValue("@idR", id);
                             cmd.Parameters.AddWithValue("@idA", idFinanciero);
-                            cmd.Parameters.AddWithValue("@decision", decision);
+                            cmd.Parameters.AddWithValue("@decision", decisionAprobacion);
                             cmd.Parameters.AddWithValue("@obs", (object)justificacion ?? DBNull.Value);
                             cmd.ExecuteNonQuery();
                         }
@@ -114,7 +133,7 @@ namespace Proyecto_Final_Diseño_
                     }
                 }
 
-                lblResultados.Text = $"Requisición {id} {decision.ToLower()} correctamente.";
+                lblResultados.Text = $"Requisición {id} {estadoRequisicion.ToLower()} correctamente.";
                 txtJustificacion.Text = "";
                 CargarRequisiciones();
             }
@@ -124,32 +143,26 @@ namespace Proyecto_Final_Diseño_
             }
         }
 
+
+
+
         private int ObtenerIdFinanciero()
         {
-            if (Session["Usuario"] == null)
+            // Validar que la sesión esté activa
+            if (Session["idUsuario"] == null || Session["Rol"] == null)
                 return 0;
 
-            int idFinanciero = 0;
-            string usuarioLogueado = Session["Usuario"].ToString();
+            // Obtener rol y usuario de sesión
+            string rol = Session["Rol"].ToString().Trim(); // elimina espacios extra
+            int idUsuario = Convert.ToInt32(Session["idUsuario"]);
 
-            using (SqlConnection con = new SqlConnection(connectionString))
-            {
-                con.Open();
-                string query = @"
-                    SELECT id_Usuario 
-                    FROM Usuario 
-                    WHERE Usuario=@usuario 
-                      AND id_Rol=(SELECT id_Rol FROM Rol WHERE Nombre='Aprobador Financiero')";
-                using (SqlCommand cmd = new SqlCommand(query, con))
-                {
-                    cmd.Parameters.AddWithValue("@usuario", usuarioLogueado);
-                    object result = cmd.ExecuteScalar();
-                    if (result != null)
-                        idFinanciero = Convert.ToInt32(result);
-                }
-            }
+            // Verificar que el usuario sea aprobador financiero (ignorando mayúsculas/minúsculas)
+            if (!rol.Equals("Aprobador Financiero", StringComparison.OrdinalIgnoreCase))
+                return 0;
 
-            return idFinanciero;
+            return idUsuario;
         }
+
+
     }
 }
