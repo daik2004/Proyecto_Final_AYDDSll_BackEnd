@@ -115,7 +115,7 @@
 
             <!-- Menú lateral -->
             <div class="menu-lateral">
-                <asp:ImageButton ID="ImageButton1" runat="server" ImageUrl="~/imagenes/fotos/Solicitudes.png"/>
+               
                 <asp:ImageButton ID="ImageButton2" runat="server" ImageUrl="~/imagenes/fotos/Saliir.png" OnClick="ImageButton2_Click" />
             </div>
 

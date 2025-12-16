@@ -3,8 +3,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Gestión de Reportes</title>
-
+    <title>Gestión de Requisiciones - Financiero</title>
     <style>
         body {
             margin: 0;
@@ -16,7 +15,6 @@
             flex-direction: column;
         }
 
-        /* Barra superior */
         .barra-superior {
             height: 60px;
             background-color: #89C4F4;
@@ -32,14 +30,12 @@
             color: #2C3E50;
         }
 
-        /* Contenedor principal */
         .contenedor {
             display: flex;
             flex: 1;
             overflow: hidden;
         }
 
-        /* Contenido */
         .contenido {
             flex: 1;
             padding: 20px;
@@ -48,7 +44,6 @@
             overflow-x: auto;
         }
 
-        /* Panel */
         .panel {
             background-color: #fff;
             padding: 30px;
@@ -59,7 +54,6 @@
             margin-bottom: 20px;
         }
 
-        /* ===== GridView como tabla ===== */
         .tabla {
             width: 100%;
             border-collapse: collapse;
@@ -78,7 +72,6 @@
             font-weight: bold;
         }
 
-        /* Botón volver */
         .boton-volver {
             margin: 20px auto;
             display: block;
@@ -107,26 +100,21 @@
 <body>
 <form id="form1" runat="server">
 
-    <!-- Barra superior -->
     <div class="barra-superior">
-        <span>Gestión de Reportes</span>
+        <span>Gestión de Requisiciones - Financiero</span>
     </div>
 
-    <!-- Contenedor -->
     <div class="contenedor">
         <div class="contenido">
 
-            <!-- Panel tabla -->
             <div class="panel scroll-tabla">
                 <asp:GridView ID="gvRequisiciones" runat="server"
                     AutoGenerateColumns="False"
                     CssClass="tabla"
                     GridLines="None"
-                    DataKeyNames="id_Requisicion"
-                    OnSelectedIndexChanged="gvRequisiciones_SelectedIndexChanged">
+                    DataKeyNames="id_Requisicion">
 
                     <Columns>
-                        <asp:CommandField ShowSelectButton="True" SelectText="Seleccionar" />
                         <asp:BoundField DataField="id_Requisicion" HeaderText="ID Requisición" />
                         <asp:BoundField DataField="Solicitante" HeaderText="Solicitante" />
                         <asp:BoundField DataField="Descripcion" HeaderText="Descripción" />
@@ -134,15 +122,15 @@
                         <asp:BoundField DataField="Monto" HeaderText="Monto" DataFormatString="₡{0:N0}" />
                         <asp:BoundField DataField="Prioridad" HeaderText="Prioridad" />
                         <asp:BoundField DataField="Estado" HeaderText="Estado" />
+                        <asp:BoundField DataField="DecisionFinanciero" HeaderText="Decisión Financiero" />
                     </Columns>
                 </asp:GridView>
             </div>
 
-            <!-- Botón volver -->
             <asp:Button ID="btnVolver" runat="server"
                 CssClass="boton-volver"
                 Text="⇦ Volver"
-                PostBackUrl="Financiero_Gestión.aspx" />
+                PostBackUrl="Inicio_Financiero.aspx" />
 
         </div>
     </div>
@@ -150,6 +138,5 @@
 </form>
 </body>
 </html>
-
 
 

@@ -7,7 +7,7 @@ namespace Proyecto_Final_Diseño_
 {
     public partial class Financiero_Reportes : System.Web.UI.Page
     {
-        private string connectionString = ConfigurationManager.ConnectionStrings["dboSistemaAuditoria"].ConnectionString;
+        private string connectionString = ConfigurationManager.ConnectionStrings["Auditoria"].ConnectionString;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -30,12 +30,17 @@ namespace Proyecto_Final_Diseño_
                                r.CantidadSolicitada,
                                r.Monto,
                                r.Prioridad,
-                               r.Estado
+                               r.Estado,
+                               a.Decision AS DecisionFinanciero
                         FROM Requisicion r
                         INNER JOIN Usuario u ON r.id_Comprador = u.id_Usuario
-                        WHERE r.Estado IN ('Pendiente', 'Aprobada', 'Rechazada')";
+                        INNER JOIN Aprobacion a ON r.id_Requisicion = a.id_Requisicion
+                        WHERE a.id_Aprobador = @IdUsuario
+                              AND a.Nivel = 'Financiero'";
 
                     SqlDataAdapter da = new SqlDataAdapter(query, con);
+                    da.SelectCommand.Parameters.AddWithValue("@IdUsuario", ObtenerIdFinanciero());
+
                     DataTable dt = new DataTable();
                     da.Fill(dt);
 
@@ -45,43 +50,24 @@ namespace Proyecto_Final_Diseño_
             }
             catch (Exception ex)
             {
-                
+                // opcional: mostrar error
+                // Response.Write("Error al cargar requisiciones: " + ex.Message);
             }
         }
 
         private int ObtenerIdFinanciero()
         {
-            if (Session["Usuario"] == null)
+            if (Session["idUsuario"] == null || Session["Rol"] == null)
                 return 0;
 
-            int idFinanciero = 0;
-            string usuarioLogueado = Session["Usuario"].ToString();
+            string rol = Session["Rol"].ToString().Trim();
+            int idUsuario = Convert.ToInt32(Session["idUsuario"]);
 
-            try
-            {
-                using (SqlConnection con = new SqlConnection(connectionString))
-                {
-                    con.Open();
-                    string query = @"
-                        SELECT id_Usuario 
-                        FROM Usuario 
-                        WHERE Usuario=@usuario 
-                          AND id_Rol=(SELECT id_Rol FROM Rol WHERE Nombre='Aprobador Financiero')";
-                    using (SqlCommand cmd = new SqlCommand(query, con))
-                    {
-                        cmd.Parameters.AddWithValue("@usuario", usuarioLogueado);
-                        object result = cmd.ExecuteScalar();
-                        if (result != null)
-                            idFinanciero = Convert.ToInt32(result);
-                    }
-                }
-            }
-            catch
-            {
-                idFinanciero = 0;
-            }
+            if (!rol.Equals("Aprobador Financiero", StringComparison.OrdinalIgnoreCase))
+                return 0;
 
-            return idFinanciero;
+            return idUsuario;
         }
     }
 }
+
