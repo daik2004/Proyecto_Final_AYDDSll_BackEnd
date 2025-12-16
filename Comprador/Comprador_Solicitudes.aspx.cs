@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -9,35 +11,98 @@ namespace Proyecto_Final_Diseño_
 {
     public partial class Comprador_Solicitudes : System.Web.UI.Page
     {
-        protected void Page_Load(object sender, EventArgs e)
-        {
+		string cn = ConfigurationManager.ConnectionStrings["Auditoria"].ConnectionString;
 
-        }
+		protected void Page_Load(object sender, EventArgs e)
+		{
+			// 🔐 Control de acceso
+			if (Session["Rol"] == null || Session["Rol"].ToString() != "Comprador")
+			{
+				Response.Redirect("~/Login.aspx");
+			}
+		}
 
-        protected void TextBox2_TextChanged(object sender, EventArgs e)
-        {
+		protected void Button1_Click(object sender, EventArgs e)
+		{
+			// Validaciones básicas
+			if (string.IsNullOrWhiteSpace(txtCantidad.Text) ||
+				string.IsNullOrWhiteSpace(txtMonto.Text))
+			{
+				return;
+			}
 
-        }
+			int idComprador = Convert.ToInt32(Session["idUsuario"]);
 
-        protected void TextBox4_TextChanged(object sender, EventArgs e)
-        {
+			using (SqlConnection con = new SqlConnection(cn))
+			{
+				string sql = @"
+                INSERT INTO Requisicion
+                (id_Comprador, Fecha_Creacion, Descripcion, Categoria,
+                 CantidadSolicitada, UnidadMedida, MotivoSolicitud,
+                 MetodoSolicitud, Monto, Estado)
+                VALUES
+                (@idComprador, GETDATE(), @descripcion, @categoria,
+                 @cantidad, @unidad, @motivo,
+                 'Web', @monto, 'Pendiente');
 
-        }
+                SELECT SCOPE_IDENTITY();";
 
-        protected void Button1_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Comprador_Infomacion.aspx");
-        }
+				SqlCommand cmd = new SqlCommand(sql, con);
 
-        protected void ImageButton2_Click(object sender, ImageClickEventArgs e)
-        {
-            Response.Redirect("Login.aspx");
-        }
+				cmd.Parameters.AddWithValue("@idComprador", idComprador);
+				cmd.Parameters.AddWithValue("@descripcion", txtDescripcion.Text.Trim());
+				cmd.Parameters.AddWithValue("@categoria", ddlCategoria.SelectedValue);
+				cmd.Parameters.AddWithValue("@cantidad", Convert.ToInt32(txtCantidad.Text));
+				cmd.Parameters.AddWithValue("@unidad", ddlUnidad.SelectedValue);
+				cmd.Parameters.AddWithValue("@motivo", txtMotivo.Text.Trim());
+				cmd.Parameters.AddWithValue("@monto", Convert.ToDecimal(txtMonto.Text));
 
-     
-        protected void Button2_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Comprador_Inicio.aspx");
-        }
-    }
+				con.Open();
+				int idRequisicion = Convert.ToInt32(cmd.ExecuteScalar());
+				lblMensaje.Text = "Requisión creada correctamente";
+
+				// Registrar auditoría
+				RegistrarAuditoria(idComprador, idRequisicion);
+
+				LimpiarFormulario();
+			}
+		}
+
+		private void RegistrarAuditoria(int usuario, int idRequisicion)
+		{
+			using (SqlConnection con = new SqlConnection(cn))
+			{
+				SqlCommand cmd = new SqlCommand(@"
+                INSERT INTO RegistroAuditoria
+                (UsuarioResponsable, Accion, EntidadAfectada, IdEntidad,
+                 DescripcionCambio, Resultado)
+                VALUES
+                (@u, 'Crear Requisición', 'Requisicion', @id,
+                 'Requisición creada por el comprador', 'Éxito')", con);
+
+				cmd.Parameters.AddWithValue("@u", usuario);
+				cmd.Parameters.AddWithValue("@id", idRequisicion);
+
+				con.Open();
+				cmd.ExecuteNonQuery();
+			}
+		}
+
+		private void LimpiarFormulario()
+		{
+			txtCantidad.Text = "";
+			txtDescripcion.Text = "";
+			txtMonto.Text = "";
+			txtMotivo.Text = "";
+			ddlUnidad.SelectedIndex = 0;
+			ddlCategoria.SelectedIndex = 0;
+			ddlPrioridad.SelectedIndex = 0;
+
+		}
+
+		protected void Button2_Click(object sender, EventArgs e)
+		{
+			Response.Redirect("~/Comprador/Comprador_Inicio.aspx");
+		}
+	}
 }
