@@ -12,8 +12,7 @@ namespace Proyecto_Final_Diseño_
 {
     public partial class Informacion_Jefe : System.Web.UI.Page
     {
-        string conexion =
-            "Data Source=.;Initial Catalog=dboSistemaAuditoria;Integrated Security=True";
+        string conexion = ConfigurationManager.ConnectionStrings["Auditoria"].ConnectionString;
 
         protected void Page_Load(object sender, EventArgs e)
         {
