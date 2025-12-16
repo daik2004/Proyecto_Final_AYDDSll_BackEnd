@@ -15,7 +15,7 @@ namespace Proyecto_Final_Diseño_
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			// 🔐 Control de acceso
+		
 			if (Session["Rol"] == null || Session["Rol"].ToString() != "Comprador")
 			{
 				Response.Redirect("~/Login.aspx");
@@ -24,7 +24,7 @@ namespace Proyecto_Final_Diseño_
 
 		protected void Button1_Click(object sender, EventArgs e)
 		{
-			// Validaciones básicas
+		
 			if (string.IsNullOrWhiteSpace(txtCantidad.Text) ||
 				string.IsNullOrWhiteSpace(txtMonto.Text))
 			{
@@ -61,8 +61,10 @@ namespace Proyecto_Final_Diseño_
 				int idRequisicion = Convert.ToInt32(cmd.ExecuteScalar());
 				lblMensaje.Text = "Requisión creada correctamente";
 
-				// Registrar auditoría
-				RegistrarAuditoria(idComprador, idRequisicion);
+                CrearAprobacionJefe(idRequisicion);
+
+               
+                RegistrarAuditoria(idComprador, idRequisicion);
 
 				LimpiarFormulario();
 			}
@@ -100,7 +102,25 @@ namespace Proyecto_Final_Diseño_
 
 		}
 
-		protected void Button2_Click(object sender, EventArgs e)
+        private void CrearAprobacionJefe(int idRequisicion)
+        {
+            using (SqlConnection con = new SqlConnection(cn))
+            {
+                SqlCommand cmd = new SqlCommand(@"
+        INSERT INTO Aprobacion
+        (id_Requisicion, id_Aprobador, Nivel, FechaAprobacion, Decision, Observaciones)
+        VALUES
+        (@idReq, NULL, 'Jefe', NULL, NULL, NULL)", con);
+
+                cmd.Parameters.AddWithValue("@idReq", idRequisicion);
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+
+        protected void Button2_Click(object sender, EventArgs e)
 		{
 			Response.Redirect("~/Comprador/Comprador_Inicio.aspx");
 		}
