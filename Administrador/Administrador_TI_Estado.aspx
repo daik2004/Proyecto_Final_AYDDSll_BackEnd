@@ -3,143 +3,132 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Definir Estado de Usuario</title>
+    <title>Estado de Usuario</title>
+
     <style>
         body {
             margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #4D6C8B;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #4D6C8B, #3A5873);
+            min-height: 100vh;
         }
 
-        /*Holi*/
         /* Barra superior */
         .barra-superior {
-            height: 60px;
+            height: 70px;
             background-color: #89C4F4;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #fff;
-            font-size: 1.8rem;
-            font-weight: bold;
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: #1E2E3D;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.25);
         }
 
         /* Contenedor principal */
-        .main-container {
+        .contenedor {
             display: flex;
-            min-height: calc(100vh - 60px);
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
         }
 
-   
-     .contenedor {
-     display: flex;
-     flex: 1;
-     overflow: hidden;
- }
+        /* Card central */
+        .card {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 480px;
+            border-radius: 18px;
+            padding: 35px 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+        }
 
- /* Menú lateral */
- .menu-lateral {
-     width: 140px;
-     background-color: #F5F5F5;
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     padding-top: 10px;
-     height: 100vh;
-     border-right: 1px solid #ccc;
- }
-
- .menu-lateral input[type=image] {
-     width: 90%;
-     margin-bottom: 20px;
-     border-radius: 12px;
-     background-color: white;
-     padding: 5px;
-     cursor: pointer;
-     transition: transform 0.2s, box-shadow 0.2s;
- }
-
- .menu-lateral input[type=image]:hover {
-     transform: scale(1.05);
-     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
- }
-
-      
-        .panel-mejorado {
-            flex: 1;
-            padding: 40px;
-            background-color: #4D6C8B;
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            color: #fff;
+        .card h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #345830;
+            font-size: 1.6rem;
         }
 
         .form-group {
-            display: flex;
-            flex-direction: column;
-            max-width: 350px;
+            margin-bottom: 22px;
         }
 
         .form-group label {
-            font-weight: bold;
+            display: block;
+            font-weight: 600;
             margin-bottom: 8px;
-            font-size: 1.1rem;
+            color: #2E4053;
         }
 
         .input-text, .input-select, .input-textarea {
-            padding: 10px 12px;
-            border-radius: 8px;
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
             border: 1px solid #ccc;
             font-size: 1rem;
-            color: black;
         }
 
         .input-textarea {
             resize: none;
-            height: 80px;
+            height: 90px;
         }
 
-        .botones-panel {
+        .acciones {
             display: flex;
-            gap: 20px;
-            margin-top: 20px;
+            justify-content: space-between;
+            margin-top: 30px;
         }
 
-        .btn-accion {
-            background-color: #FFCC00;
-            border: none;
-            border-radius: 8px;
-            padding: 12px 25px;
+        .btn {
+            width: 48%;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 1.05rem;
             font-weight: bold;
             cursor: pointer;
-            transition: 0.3s;
-            color: #000;
-            font-size: 1rem;
+            border: none;
+            transition: 0.25s;
         }
 
-        .btn-accion:hover {
+        .btn-primario {
+            background-color: #FFCC00;
+        }
+
+        .btn-primario:hover {
             background-color: #e6b800;
+        }
+
+        .btn-secundario {
+            background-color: #dfe6e9;
+        }
+
+        .btn-secundario:hover {
+            background-color: #b2bec3;
         }
     </style>
 </head>
+
 <body>
     <form id="form1" runat="server">
-        <!-- Barra superior -->
-        <div class="barra-superior">Definir Estado</div>
-        <!-- -->
+
+        <div class="barra-superior">
+            Gestión de Estado de Usuarios
+        </div>
+
         <div class="contenedor">
-           
-            <!-- Panel de contenido mejorado -->
-            <div class="panel-mejorado">
+            <div class="card">
+
+                <h2>Definir Estado</h2>
+
                 <div class="form-group">
-                    <label for="TextBox12">Id asociado a Usuario</label>
-                    <asp:TextBox ID="TextBox12" runat="server" CssClass="input-text"></asp:TextBox>
+                    <label for="TextBox12">ID del Usuario</label>
+                    <asp:TextBox ID="TextBox12" runat="server" CssClass="input-text" />
                 </div>
 
                 <div class="form-group">
-                    <label for="DropDownList1">Estado</label>
+                    <label for="DropDownList1">Estado de la Cuenta</label>
                     <asp:DropDownList ID="DropDownList1" runat="server" CssClass="input-select">
                         <asp:ListItem>Activar</asp:ListItem>
                         <asp:ListItem>Inactivar</asp:ListItem>
@@ -147,14 +136,22 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="TextBox13">Motivo de inactivación de cuenta</label>
-                    <asp:TextBox ID="TextBox13" runat="server" TextMode="MultiLine" CssClass="input-textarea"></asp:TextBox>
+                    <label for="TextBox13">Motivo (obligatorio si se inactiva)</label>
+                    <asp:TextBox ID="TextBox13" runat="server" TextMode="MultiLine" CssClass="input-textarea" />
                 </div>
 
-                <div class="botones-panel">
-                    <asp:Button ID="Button1" runat="server" Text="Definir Estado" OnClick="Page_Load" CssClass="btn-accion" />
-                    <asp:Button ID="Button3" runat="server" Text="⇦" OnClick="Button2_Click" CssClass="btn-accion" />
+                <div class="acciones">
+                    <asp:Button ID="Button1" runat="server"
+                        Text="Guardar"
+                        CssClass="btn btn-primario"
+                        OnClick="Button1_Click" />
+
+                    <asp:Button ID="Button3" runat="server"
+                        Text="Volver"
+                        CssClass="btn btn-secundario"
+                        OnClick="Button2_Click" />
                 </div>
+
             </div>
         </div>
     </form>
