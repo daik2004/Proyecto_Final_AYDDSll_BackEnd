@@ -19,10 +19,33 @@ namespace Proyecto_Final_Diseño_
 
         private void CargarRequisiciones()
         {
+            int idFinanciero = ObtenerIdFinanciero();
+            if (idFinanciero == 0)
+                return;
+
+            decimal montoMin = 0;
+            decimal montoMax = decimal.MaxValue;
+
+            // Clasificación de aprobadores financieros
+            if (idFinanciero == 1)
+            {
+                montoMax = 100000;
+            }
+            else if (idFinanciero == 2)
+            {
+                montoMin = 100000;
+                montoMax = 1000000;
+            }
+            else
+            {
+                montoMin = 1000000;
+            }
+
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 string query = @"
-                    SELECT r.id_Requisicion,
+                    SELECT DISTINCT
+                           r.id_Requisicion,
                            u.Nombre + ' ' + u.Apellido1 AS Solicitante,
                            r.Descripcion,
                            r.CantidadSolicitada,
@@ -31,9 +54,18 @@ namespace Proyecto_Final_Diseño_
                            r.Estado
                     FROM Requisicion r
                     INNER JOIN Usuario u ON r.id_Comprador = u.id_Usuario
-                    WHERE r.Estado = 'Pendiente'";
+                    INNER JOIN RegistroAuditoria ra 
+                        ON ra.IdEntidad = r.id_Requisicion
+                    WHERE r.Estado = 'Pendiente'
+                      AND ra.EntidadAfectada = 'Requisicion'
+                      AND ra.Resultado = 'Éxito'
+                      AND r.Monto >= @MontoMin
+                      AND r.Monto < @MontoMax";
 
                 SqlDataAdapter da = new SqlDataAdapter(query, con);
+                da.SelectCommand.Parameters.AddWithValue("@MontoMin", montoMin);
+                da.SelectCommand.Parameters.AddWithValue("@MontoMax", montoMax);
+
                 DataTable dt = new DataTable();
                 da.Fill(dt);
 
@@ -81,24 +113,8 @@ namespace Proyecto_Final_Diseño_
 
             string justificacion = string.IsNullOrEmpty(txtJustificacion.Text) ? null : txtJustificacion.Text;
 
-            // Normalizar decision para tabla Aprobacion
-            string decisionAprobacion;
-            if (decision.Equals("Aprobar", StringComparison.OrdinalIgnoreCase))
-                decisionAprobacion = "Aprobado";
-            else if (decision.Equals("Rechazar", StringComparison.OrdinalIgnoreCase))
-                decisionAprobacion = "Rechazado";
-            else
-            {
-                lblResultados.Text = "Decision inválida.";
-                return;
-            }
-
-            // Normalizar estado para tabla Requisicion
-            string estadoRequisicion;
-            if (decision.Equals("Aprobar", StringComparison.OrdinalIgnoreCase))
-                estadoRequisicion = "Aprobada";
-            else
-                estadoRequisicion = "Rechazada";
+            string decisionAprobacion = decision == "Aprobar" ? "Aprobado" : "Rechazado";
+            string estadoRequisicion = decision == "Aprobar" ? "Aprobada" : "Rechazada";
 
             try
             {
@@ -107,7 +123,6 @@ namespace Proyecto_Final_Diseño_
                     con.Open();
                     using (SqlTransaction tran = con.BeginTransaction())
                     {
-                        // Actualiza estado de la requisición
                         string updateQuery = "UPDATE Requisicion SET Estado=@estado WHERE id_Requisicion=@id";
                         using (SqlCommand cmd = new SqlCommand(updateQuery, con, tran))
                         {
@@ -116,10 +131,10 @@ namespace Proyecto_Final_Diseño_
                             cmd.ExecuteNonQuery();
                         }
 
-                        // Inserta registro de aprobación
                         string insertQuery = @"
-                    INSERT INTO Aprobacion (id_Requisicion, id_Aprobador, Nivel, FechaAprobacion, Decision, Observaciones)
-                    VALUES (@idR, @idA, 'Financiero', GETDATE(), @decision, @obs)";
+                            INSERT INTO Aprobacion 
+                            (id_Requisicion, id_Aprobador, Nivel, FechaAprobacion, Decision, Observaciones)
+                            VALUES (@idR, @idA, 'Financiero', GETDATE(), @decision, @obs)";
                         using (SqlCommand cmd = new SqlCommand(insertQuery, con, tran))
                         {
                             cmd.Parameters.AddWithValue("@idR", id);
@@ -143,26 +158,18 @@ namespace Proyecto_Final_Diseño_
             }
         }
 
-
-
-
         private int ObtenerIdFinanciero()
         {
-            // Validar que la sesión esté activa
             if (Session["idUsuario"] == null || Session["Rol"] == null)
                 return 0;
 
-            // Obtener rol y usuario de sesión
-            string rol = Session["Rol"].ToString().Trim(); // elimina espacios extra
+            string rol = Session["Rol"].ToString().Trim();
             int idUsuario = Convert.ToInt32(Session["idUsuario"]);
 
-            // Verificar que el usuario sea aprobador financiero (ignorando mayúsculas/minúsculas)
             if (!rol.Equals("Aprobador Financiero", StringComparison.OrdinalIgnoreCase))
                 return 0;
 
             return idUsuario;
         }
-
-
     }
 }
