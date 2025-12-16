@@ -5,149 +5,126 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Información de Reportes</title>
+    <title>Historial de Aprobaciones - Jefe</title>
 
     <style>
-        body, html {
+        body {
             margin: 0;
             padding: 0;
-            height: 100%;
-            font-family: Arial;
-            background: #4D6C8B;
+            background-color: #4D6C8B;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         .barra-superior {
-            height: 80px;
-            background: #89C4F4;
+            height: 60px;
+            background-color: #89C4F4;
             display: flex;
-            justify-content: center;
             align-items: center;
-            font-size: 36px;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .barra-superior span {
+            font-size: 26px;
             font-weight: bold;
+            color: #2C3E50;
         }
 
-        .menu-lateral {
-            width: 170px;
-            float: left;
-            background: #cde8f7;
-            height: calc(100vh - 80px);
-            padding-top: 30px;
-        }
-
-            .menu-lateral .img-btn {
-                display: block;
-                margin: 0 auto 20px;
-            }
-
-        .contenido-wrap {
-            margin-left: 170px;
+        .contenedor {
+            flex: 1;
             padding: 20px;
+            overflow: auto;
         }
 
         .panel {
-            background: #D9D9D9;
+            background-color: #fff;
             padding: 25px;
-            border: 3px solid #7A8A99;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
         .tabla {
             width: 100%;
             border-collapse: collapse;
-            font-size: 18px;
             text-align: center;
         }
 
-            .tabla th {
-                border-bottom: 3px solid #7A8A99;
-                padding: 12px;
-            }
+        .tabla th, .tabla td {
+            padding: 12px;
+            border-bottom: 1px solid #ccc;
+        }
 
-            .tabla td {
-                border-bottom: 2px solid #b5b5b5;
-                padding: 10px;
-            }
-
-        .estado-pendiente {
-            background: #FFD800;
+        .tabla th {
+            background-color: #f0f0f0;
             font-weight: bold;
         }
 
         .estado-aprobada {
-            background: #00C853;
-            color: white;
+            color: green;
             font-weight: bold;
         }
 
         .estado-rechazada {
-            background: #D50000;
-            color: white;
+            color: red;
             font-weight: bold;
         }
 
         .boton-volver {
-            margin-top: 25px;
-            width: 160px;
-            height: 60px;
-            background: #FFCC00;
-            font-size: 30px;
-            font-weight: bold;
+            margin: 20px auto;
+            display: block;
+            width: 200px;
+            height: 45px;
+            background-color: #FFCC00;
             border: none;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
             cursor: pointer;
         }
     </style>
 </head>
 
 <body>
-    <form runat="server">
+<form id="form1" runat="server">
 
-        <div class="barra-superior">Información de Reportes</div>
+    <div class="barra-superior">
+        <span>Historial de Requisiciones Aprobadas / Rechazadas</span>
+    </div>
 
-        <div class="menu-lateral">
-            <asp:ImageButton ID="ImageButton1" runat="server"
-                ImageUrl="~/imagenes/fotos/Solicitudes.png"
-                Height="47px" Width="132px" CssClass="img-btn" />
+    <div class="contenedor">
+        <div class="panel">
 
-            <asp:ImageButton ID="ImageButton2" runat="server"
-                ImageUrl="~/imagenes/fotos/Saliir.png"
-                Height="49px" Width="132px"
-                CssClass="img-btn"
-                OnClick="ImageButton2_Click" />
-        </div>
+            <asp:GridView ID="GridView1" runat="server"
+                AutoGenerateColumns="False"
+                CssClass="tabla"
+                GridLines="None">
 
-        <div class="contenido-wrap">
-            <div class="panel">
+                <Columns>
+                    <asp:BoundField DataField="id_Requisicion" HeaderText="ID" />
+                    <asp:BoundField DataField="Fecha_Creacion" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy}" />
+                    <asp:BoundField DataField="Descripcion" HeaderText="Descripción" />
+                    <asp:BoundField DataField="Categoria" HeaderText="Categoría" />
+                    <asp:BoundField DataField="CantidadSolicitada" HeaderText="Cantidad" />
+                    <asp:BoundField DataField="Monto" HeaderText="Monto" DataFormatString="₡{0:N0}" />
+                    <asp:BoundField DataField="Prioridad" HeaderText="Prioridad" />
+                    <asp:BoundField DataField="Estado" HeaderText="Estado" />
+                    <asp:BoundField DataField="Decision" HeaderText="Decisión Jefe" />
+                    <asp:BoundField DataField="FechaAprobacion" HeaderText="Fecha Decisión" DataFormatString="{0:dd/MM/yyyy}" />
+                </Columns>
 
-                <asp:GridView ID="GridView1" runat="server"
-                    AutoGenerateColumns="False"
-                    CssClass="tabla">
+            </asp:GridView>
 
-                    <Columns>
-                        <asp:BoundField DataField="id_Requisicion" HeaderText="ID" />
-                        <asp:BoundField DataField="Categoria" HeaderText="Categoría" />
-                        <asp:BoundField DataField="UnidadMedida" HeaderText="Unidad" />
-                        <asp:BoundField DataField="CantidadSolicitada" HeaderText="Cantidad" />
-                        <asp:BoundField DataField="Descripcion" HeaderText="Descripción" />
-                        <asp:BoundField DataField="Monto" HeaderText="Monto" DataFormatString="{0:C}" />
-
-                        <asp:TemplateField HeaderText="Estado">
-                            <ItemTemplate>
-                                <asp:Label ID="lblEstado" runat="server"
-                                    Text='<%# Eval("Estado") %>'></asp:Label>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                    </Columns>
-
-                </asp:GridView>
-
-            </div>
-
-            <asp:Button ID="Button1" runat="server"
+            <asp:Button ID="btnVolver" runat="server"
                 CssClass="boton-volver"
                 Text="⇦ Volver"
-                OnClick="Button1_Click" />
+                PostBackUrl="Jefe_Inicio.aspx" />
 
         </div>
+    </div>
 
-    </form>
+</form>
 </body>
 </html>
