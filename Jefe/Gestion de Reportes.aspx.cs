@@ -13,7 +13,7 @@ namespace Proyecto_Final_Diseño_
 {
     public partial class Gestion_Reportes : System.Web.UI.Page
     {
-       
+
         string conexion = ConfigurationManager.ConnectionStrings["Auditoria"].ConnectionString;
         int idJefe;
         string departamentoJefe;
@@ -35,7 +35,6 @@ namespace Proyecto_Final_Diseño_
             }
         }
 
-        // 🔹 Obtener el departamento del jefe logueado
         void ObtenerDepartamentoJefe()
         {
             using (SqlConnection con = new SqlConnection(conexion))
@@ -44,16 +43,11 @@ namespace Proyecto_Final_Diseño_
                     "SELECT Departamento FROM Usuario WHERE id_Usuario = @id", con);
 
                 cmd.Parameters.AddWithValue("@id", idJefe);
-
                 con.Open();
                 departamentoJefe = cmd.ExecuteScalar()?.ToString();
             }
         }
 
-        // 🔹 Cargar SOLO requisiciones:
-        //    - Pendientes
-        //    - Nivel = Jefe
-        //    - Del mismo departamento
         void CargarGrid()
         {
             using (SqlConnection con = new SqlConnection(conexion))
@@ -66,15 +60,16 @@ namespace Proyecto_Final_Diseño_
                     WHERE r.Estado = 'Pendiente'
                     AND a.Nivel = 'Jefe'
                     AND a.Decision IS NULL
-                    AND u.Departamento = @Departamento", con);
+                    AND u.Departamento = @Dep", con);
 
-                da.SelectCommand.Parameters.AddWithValue("@Departamento", departamentoJefe);
+                da.SelectCommand.Parameters.AddWithValue("@Dep", departamentoJefe);
 
                 DataTable dt = new DataTable();
                 da.Fill(dt);
 
                 gvRequisiciones.DataSource = dt;
                 gvRequisiciones.DataBind();
+
                 PintarEstadosGrid();
             }
         }
@@ -96,61 +91,17 @@ namespace Proyecto_Final_Diseño_
         {
             GridViewRow row = gvRequisiciones.SelectedRow;
 
-            lblId.Text = row.Cells[1].Text;
-            lblMonto.Text = row.Cells[9].Text;
+            lblId.Text = gvRequisiciones.SelectedDataKey.Value.ToString();
+
+            Label lblMontoGrid = row.FindControl("lblMontoGrid") as Label;
+            lblMonto.Text = lblMontoGrid?.Text;
+
             pnlDetalle.Visible = true;
         }
 
-        // 🔥 APROBAR (pasa a FINANCIERO según monto)
         protected void btnAprobar_Click(object sender, EventArgs e)
         {
-            int idRequisicion = Convert.ToInt32(gvRequisiciones.SelectedDataKey.Value);
-
-            using (SqlConnection con = new SqlConnection(conexion))
-            {
-                con.Open();
-
-                // 1️⃣ Aprobar como JEFE
-                SqlCommand cmdJefe = new SqlCommand(@"
-                    UPDATE Aprobacion
-                    SET 
-                        id_Aprobador = @idJefe,
-                        FechaAprobacion = GETDATE(),
-                        Decision = 'Aprobado',
-                        Observaciones = @Obs
-                    WHERE id_Requisicion = @Id
-                    AND Nivel = 'Jefe'", con);
-
-                cmdJefe.Parameters.AddWithValue("@idJefe", idJefe);
-                cmdJefe.Parameters.AddWithValue("@Obs", txtObservaciones.Text);
-                cmdJefe.Parameters.AddWithValue("@Id", idRequisicion);
-                cmdJefe.ExecuteNonQuery();
-
-                // 2️⃣ Insertar aprobación FINANCIERA
-                SqlCommand cmdFin = new SqlCommand(@"
-                    INSERT INTO Aprobacion (id_Requisicion, Nivel)
-                    SELECT id_Requisicion, 'Financiero'
-                    FROM Requisicion
-                    WHERE id_Requisicion = @Id
-                    AND NOT EXISTS (
-                        SELECT 1 FROM Aprobacion
-                        WHERE id_Requisicion = @Id
-                        AND Nivel = 'Financiero'
-                    )", con);
-
-                cmdFin.Parameters.AddWithValue("@Id", idRequisicion);
-                cmdFin.ExecuteNonQuery();
-            }
-
-            txtObservaciones.Text = "";
-            pnlDetalle.Visible = false;
-            CargarGrid();
-        }
-
-        // ❌ RECHAZAR
-        protected void btnRechazar_Click(object sender, EventArgs e)
-        {
-            int idRequisicion = Convert.ToInt32(gvRequisiciones.SelectedDataKey.Value);
+            int idReq = Convert.ToInt32(gvRequisiciones.SelectedDataKey.Value);
 
             using (SqlConnection con = new SqlConnection(conexion))
             {
@@ -158,28 +109,52 @@ namespace Proyecto_Final_Diseño_
 
                 SqlCommand cmd = new SqlCommand(@"
                     UPDATE Aprobacion
-                    SET 
-                        id_Aprobador = @idJefe,
-                        FechaAprobacion = GETDATE(),
-                        Decision = 'Rechazado',
-                        Observaciones = @Obs
-                    WHERE id_Requisicion = @Id
-                    AND Nivel = 'Jefe'", con);
+                    SET id_Aprobador=@id,
+                        FechaAprobacion=GETDATE(),
+                        Decision='Aprobado',
+                        Observaciones=@Obs
+                    WHERE id_Requisicion=@Req AND Nivel='Jefe'", con);
 
-                cmd.Parameters.AddWithValue("@idJefe", idJefe);
+                cmd.Parameters.AddWithValue("@id", idJefe);
                 cmd.Parameters.AddWithValue("@Obs", txtObservaciones.Text);
-                cmd.Parameters.AddWithValue("@Id", idRequisicion);
+                cmd.Parameters.AddWithValue("@Req", idReq);
                 cmd.ExecuteNonQuery();
-
-                SqlCommand cmdReq = new SqlCommand(
-                    "UPDATE Requisicion SET Estado = 'Rechazada' WHERE id_Requisicion = @Id", con);
-
-                cmdReq.Parameters.AddWithValue("@Id", idRequisicion);
-                cmdReq.ExecuteNonQuery();
             }
 
-            txtObservaciones.Text = "";
             pnlDetalle.Visible = false;
+            txtObservaciones.Text = "";
+            CargarGrid();
+        }
+
+        protected void btnRechazar_Click(object sender, EventArgs e)
+        {
+            int idReq = Convert.ToInt32(gvRequisiciones.SelectedDataKey.Value);
+
+            using (SqlConnection con = new SqlConnection(conexion))
+            {
+                con.Open();
+
+                SqlCommand cmd = new SqlCommand(@"
+                    UPDATE Aprobacion
+                    SET id_Aprobador=@id,
+                        FechaAprobacion=GETDATE(),
+                        Decision='Rechazado',
+                        Observaciones=@Obs
+                    WHERE id_Requisicion=@Req AND Nivel='Jefe'", con);
+
+                cmd.Parameters.AddWithValue("@id", idJefe);
+                cmd.Parameters.AddWithValue("@Obs", txtObservaciones.Text);
+                cmd.Parameters.AddWithValue("@Req", idReq);
+                cmd.ExecuteNonQuery();
+
+                SqlCommand cmd2 = new SqlCommand(
+                    "UPDATE Requisicion SET Estado='Rechazada' WHERE id_Requisicion=@Req", con);
+                cmd2.Parameters.AddWithValue("@Req", idReq);
+                cmd2.ExecuteNonQuery();
+            }
+
+            pnlDetalle.Visible = false;
+            txtObservaciones.Text = "";
             CargarGrid();
         }
     }
