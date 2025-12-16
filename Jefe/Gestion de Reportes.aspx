@@ -1,8 +1,6 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Gestion de Reportes.aspx.cs" Inherits="Proyecto_Final_Diseño_.Gestion_Reportes" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Gestion de Reportes.aspx.cs" Inherits="Proyecto_Final_Diseño_.Gestion_de_Reportes" %>
 
-<%@ Page Language="C#" AutoEventWireup="true"
-    CodeBehind="Gestion de Reportes.aspx.cs"
-    Inherits="Proyecto_Final_Diseño_.Gestion_Reportes" %>
+
 
 <!DOCTYPE html>
 <html>

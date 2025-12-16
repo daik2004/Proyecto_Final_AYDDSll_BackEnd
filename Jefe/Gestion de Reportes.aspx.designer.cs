@@ -11,7 +11,7 @@ namespace Proyecto_Final_Diseño_
 {
 
 
-    public partial class Gestion_Reportes
+    public partial class Gestion_de_Reportes
     {
 
         /// <summary>
