@@ -25,6 +25,7 @@ namespace Proyecto_Final_Diseño_
             }
 
             idJefe = Convert.ToInt32(Session["idUsuario"]);
+            ObtenerDepartamentoJefe();
 
             if (!IsPostBack)
             {
