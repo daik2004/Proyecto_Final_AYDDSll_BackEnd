@@ -1,137 +1,140 @@
-﻿<!DOCTYPE html>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Gestion_Reportes.Cs" Inherits="Proyecto_Final_Diseño_.Gestion_Reportes" %>
+
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Gestión de Reportes</title>
-
     <style>
-        body {
+        body, html {
             margin: 0;
             padding: 0;
-            background-color: #4D6C8B;
-            font-family: Arial, sans-serif;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
+            height: 100%;
+            font-family: Arial;
+            background: #4D6C8B;
         }
 
-        /* Barra superior */
         .barra-superior {
-            height: 60px;
-            background-color: #89C4F4;
+            height: 80px;
+            background: #89C4F4;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-
-        .barra-superior span {
-            font-size: 28px;
+            font-size: 36px;
             font-weight: bold;
-            color: #2C3E50;
+            color: #1F2E40;
         }
 
-        /* Contenedor principal */
-        .contenedor {
-            display: flex;
-            flex: 1;
-        }
-
-        /* Contenido centrado */
-        .contenido {
-            flex: 1;
-            padding: 20px;
+        .menu-lateral {
+            width: 140px;
+            background: #F5F5F5;
+            float: left;
+            height: 100vh;
+            padding-top: 10px;
+            border-right: 1px solid #ccc;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
         }
 
-        /* Panel */
+            .menu-lateral input[type=image] {
+                width: 90%;
+                margin-bottom: 20px;
+                border-radius: 12px;
+                background: white;
+                padding: 5px;
+                cursor: pointer;
+                transition: transform 0.2s, box-shadow 0.2s;
+            }
+
+                .menu-lateral input[type=image]:hover {
+                    transform: scale(1.05);
+                    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+                }
+
+        .contenido-wrap {
+            margin-left: 140px;
+            padding: 20px;
+        }
+
         .panel {
-            background-color: #fff;
-            padding: 30px;
-            width: 100%;
-            max-width: 1200px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            background: #D9D9D9;
+            padding: 25px;
+            border: 3px solid #7A8A99;
+            margin-bottom: 20px;
         }
 
-        /* Tabla */
-        .tabla {
+        .gridview {
             width: 100%;
             border-collapse: collapse;
+            font-size: 18px;
             text-align: center;
         }
 
-        .tabla th, .tabla td {
-            padding: 12px;
-            font-size: 16px;
-            border-bottom: 1px solid #ccc;
-        }
+            .gridview th {
+                padding: 10px;
+                border-bottom: 3px solid #7A8A99;
+            }
 
-        .tabla th {
-            background-color: #f0f0f0;
-            color: #2C3E50;
+            .gridview td {
+                padding: 10px;
+                border-bottom: 2px solid #999;
+            }
+
+        .estado-pendiente {
+            background: #FFD700;
             font-weight: bold;
+            padding: 6px;
+            border-radius: 4px;
         }
 
-        /* Observaciones */
-        .txtObservaciones {
-            width: 100%;
-            height: 100px;
-            padding: 10px;
-            font-size: 16px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            resize: none;
+        .estado-aprobada {
+            background: #6FCF97;
+            font-weight: bold;
+            padding: 6px;
+            border-radius: 4px;
         }
 
-        /* Botones */
-        .acciones {
+        .estado-rechazada {
+            background: #EB5757;
+            color: white;
+            font-weight: bold;
+            padding: 6px;
+            border-radius: 4px;
+        }
+
+        .botones-accion {
             display: flex;
             justify-content: center;
-            gap: 30px;
+            gap: 40px;
+            margin-top: 20px;
         }
 
-        /* Botón volver */
-        .boton-volver {
-            width: 200px;
-            height: 45px;
-            background-color: #FFCC00;
-            border: none;
-            font-size: 20px;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .boton-volver:hover {
-            background-color: #e6b800;
-            transform: scale(1.03);
+        #txtObservaciones {
+            width: 95%;
+            height: 120px;
         }
     </style>
 </head>
-
 <body>
-<form id="form1" runat="server">
+    <form id="form1" runat="server">
 
-    <!-- Barra superior -->
-    <div class="barra-superior">
-        <span>Gestión de Reportes</span>
-    </div>
+        <div class="barra-superior">Gestión de Reportes</div>
 
-    <div class="contenedor">
-        <div class="contenido">
+        <div class="menu-lateral">
+            <div class="menu-lateral">
+     
+     
+ </div>
+        </div>
 
-            <!-- Tabla de requisiciones -->
-            <div class="panel">
+        <div class="contenido-wrap">
+
+            <asp:Panel runat="server" CssClass="panel">
                 <asp:GridView ID="gvRequisiciones" runat="server"
                     AutoGenerateColumns="False"
-                    CssClass="tabla"
+                    CssClass="gridview"
                     DataKeyNames="id_Requisicion"
                     OnSelectedIndexChanged="gvRequisiciones_SelectedIndexChanged">
-
                     <Columns>
                         <asp:CommandField ShowSelectButton="true" SelectText="Seleccionar" />
                         <asp:BoundField DataField="id_Requisicion" HeaderText="ID" />
@@ -141,16 +144,20 @@
                         <asp:BoundField DataField="Categoria" HeaderText="Categoría" />
                         <asp:BoundField DataField="CantidadSolicitada" HeaderText="Cantidad" />
                         <asp:BoundField DataField="UnidadMedida" HeaderText="Unidad" />
-                        <asp:BoundField DataField="Monto" HeaderText="Monto" DataFormatString="₡{0:N0}" />
+                        <asp:BoundField DataField="MotivoSolicitud" HeaderText="Motivo" />
+                        <asp:BoundField DataField="Monto" HeaderText="Monto" DataFormatString="{0:C}" />
                         <asp:BoundField DataField="Prioridad" HeaderText="Prioridad" />
-                        <asp:BoundField DataField="Estado" HeaderText="Estado" />
+                        <asp:TemplateField HeaderText="Estado">
+                            <ItemTemplate>
+                                <asp:Label ID="lblEstadoGrid" runat="server" Text='<%# Eval("Estado") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
                     </Columns>
                 </asp:GridView>
-            </div>
+            </asp:Panel>
 
-            <!-- Detalle -->
             <asp:Panel ID="pnlDetalle" runat="server" CssClass="panel" Visible="false">
-                <h3>Detalle de la solicitud seleccionada</h3><br />
+                <h3>Detalle de la solicitud seleccionada</h3>
 
                 <asp:Label ID="lblId" runat="server" /><br />
                 <asp:Label ID="lblIdComprador" runat="server" /><br />
@@ -159,38 +166,25 @@
                 <asp:Label ID="lblCategoria" runat="server" /><br />
                 <asp:Label ID="lblCantidad" runat="server" /><br />
                 <asp:Label ID="lblUnidad" runat="server" /><br />
+                <asp:Label ID="lblMotivo" runat="server" /><br />
                 <asp:Label ID="lblMonto" runat="server" /><br />
-                <asp:Label ID="lblEstado" runat="server" /><br /><br />
+                <asp:Label ID="lblEstado" runat="server" /><br />
 
-                <strong>Observaciones:</strong><br /><br />
-                <asp:TextBox ID="txtObservaciones" runat="server"
-                    CssClass="txtObservaciones"
-                    TextMode="MultiLine" />
+                <strong>Observaciones:</strong><br />
+                <asp:TextBox ID="txtObservaciones" runat="server" TextMode="MultiLine" />
 
-                <br /><br />
-
-                <div class="acciones">
+                <div class="botones-accion">
                     <asp:ImageButton ID="btnAprobar" runat="server"
                         ImageUrl="~/imagenes/fotos/Aceptar.png"
-                        Width="160px"
-                        OnClick="btnAprobar_Click" />
-
+                        Width="140px" OnClick="btnAprobar_Click" />
                     <asp:ImageButton ID="btnRechazar" runat="server"
                         ImageUrl="~/imagenes/fotos/Denegar.png"
-                        Width="160px"
-                        OnClick="btnRechazar_Click" />
+                        Width="140px" OnClick="btnRechazar_Click" />
                 </div>
             </asp:Panel>
 
-            <!-- Volver -->
-            <asp:Button runat="server"
-                CssClass="boton-volver"
-                Text="⇦ Volver"
-                PostBackUrl="Inicio_Reportes.aspx" />
-
         </div>
-    </div>
 
-</form>
+    </form>
 </body>
 </html>
