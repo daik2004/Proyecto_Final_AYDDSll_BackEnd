@@ -1,9 +1,10 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Financiero_Gestión.aspx.cs" Inherits="Proyecto_Final_Diseño_.Financiero_Gestión" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Financiero_Gestion.aspx.cs" Inherits="Proyecto_Final_Diseño_.Financiero_Gestión" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Gestión Financiera</title>
+    <title>Gestión de Requisiciones</title>
+
     <style>
         body {
             margin: 0;
@@ -25,11 +26,11 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-            .barra-superior span {
-                font-size: 28px;
-                font-weight: bold;
-                color: #2C3E50;
-            }
+        .barra-superior span {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2C3E50;
+        }
 
         /* Contenedor principal */
         .contenedor {
@@ -38,15 +39,16 @@
             overflow: hidden;
         }
 
-        /* Contenido principal */
+        /* Contenido */
         .contenido {
             flex: 1;
             padding: 20px;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             overflow-x: auto;
         }
 
+        /* Panel */
         .panel {
             background-color: #fff;
             padding: 30px;
@@ -54,51 +56,69 @@
             max-width: 1200px;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            margin-bottom: 20px;
         }
 
-        /* Tabla estilizada */
+        /* GridView como tabla */
         .tabla {
             width: 100%;
             border-collapse: collapse;
             text-align: center;
         }
 
-            .tabla th, .tabla td {
-                padding: 12px;
-                font-size: 16px;
-                border-bottom: 1px solid #ccc;
-            }
+        .tabla th, .tabla td {
+            padding: 12px;
+            font-size: 16px;
+            border-bottom: 1px solid #ccc;
+        }
 
-            .tabla th {
-                background-color: #f0f0f0;
-                color: #2C3E50;
-                font-weight: bold;
-            }
+        .tabla th {
+            background-color: #f0f0f0;
+            color: #2C3E50;
+            font-weight: bold;
+        }
 
-        .estado {
-            padding: 5px 10px;
+        /* TextBox justificación */
+        .txtJustificacion {
+            width: 100%;
+            height: 80px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            resize: none;
+        }
+
+        /* Botones */
+        .btn {
+            width: 160px;
+            height: 45px;
+            background-color: #FFCC00;
+            border: none;
+            font-size: 18px;
             font-weight: bold;
             border-radius: 8px;
-            display: inline-block;
-            color: #fff;
+            cursor: pointer;
+            transition: 0.3s;
         }
 
-        .estado-procesando {
-            background-color: #FFCC00;
-            color: #2C3E50;
+        .btn:hover {
+            background-color: #e6b800;
+            transform: scale(1.03);
         }
 
-        .estado-aceptada {
-            background-color: #2ECC71;
+        /* Resultado */
+        .resultado {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2ECC71;
+            text-align: center;
         }
 
-        .estado-rechazada {
-            background-color: #E74C3C;
-        }
-
+        /* Botón volver */
         .boton-volver {
-            margin: 20px auto; /* Centra el botón horizontalmente */
-            display: block; /* Necesario para que el margin auto funcione */
+            margin: 20px auto;
+            display: block;
             width: 200px;
             height: 45px;
             background-color: #FFCC00;
@@ -110,82 +130,84 @@
             transition: 0.3s;
         }
 
-            .boton-volver:hover {
-                background-color: #e6b800;
-                transform: scale(1.03);
-            }
+        .boton-volver:hover {
+            background-color: #e6b800;
+            transform: scale(1.03);
+        }
 
-        /* Scroll horizontal en tabla si es necesario */
         .scroll-tabla {
             overflow-x: auto;
         }
     </style>
 </head>
+
 <body>
-    <form id="form1" runat="server">
-        <!-- Barra superior -->
-        <div class="barra-superior">
-            <span>Gestión Financiera</span>
-        </div>
+<form id="form1" runat="server">
 
-        <!-- Contenido principal -->
+    <!-- Barra superior -->
+    <div class="barra-superior">
+        <span>Gestión de Requisiciones</span>
+    </div>
+
+    <!-- Contenedor -->
+    <div class="contenedor">
         <div class="contenido">
-            <div class="panel scroll-tabla">
-                <table class="tabla">
-                    <thead>
-                        <tr>
-                            <th>Id Solicitante</th>
-                            <th>Descripción</th>
-                            <th>Cantidad</th>
-                            <th>Monto</th>
-                            <th>Prioridad</th>
-                            <th>Estado</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Mantener contenido de gestión financiera tal como estaba -->
-                        <tr>
-                            <td>#123</td>
-                            <td>Hojas</td>
-                            <td>3</td>
-                            <td>₡10 000</td>
-                            <td>Baja</td>
-                            <td>
-                                <asp:Label ID="Label1" runat="server" CssClass="estado estado-procesando" Text="Procesando"></asp:Label></td>
-                        </tr>
-                        <tr>
-                            <td>#236</td>
-                            <td>Impresora</td>
-                            <td>1</td>
-                            <td>₡100 000</td>
-                            <td>Baja</td>
-                            <td>
-                                <asp:Label ID="Label2" runat="server" CssClass="estado estado-aceptada" Text="Aceptada"></asp:Label></td>
-                        </tr>
-                        <tr>
-                            <td>#452</td>
-                            <td>PC Gamer</td>
-                            <td>1</td>
-                            <td>₡1 000 000</td>
-                            <td>Baja</td>
-                            <td>
-                                <asp:Label ID="Label3" runat="server" CssClass="estado estado-rechazada" Text="Rechazada"></asp:Label></td>
-                        </tr>
-                        <tr>
-                            <td>#326</td>
-                            <td>Escritorio</td>
-                            <td>1</td>
-                            <td>₡125 000</td>
-                            <td>Baja</td>
-                            <td>
-                                <asp:Label ID="Label4" runat="server" CssClass="estado estado-procesando" Text="Procesando"></asp:Label></td>
-                        </tr>
-                    </tbody>
-                </table>
 
-                <asp:Button ID="Button1" runat="server" CssClass="boton-volver" OnClick="Button1_Click" Text="⇦" />
+            <!-- Panel tabla -->
+            <div class="panel scroll-tabla">
+                <asp:GridView ID="gvRequisiciones" runat="server"
+                    AutoGenerateColumns="False"
+                    CssClass="tabla"
+                    DataKeyNames="id_Requisicion"
+                    OnSelectedIndexChanged="gvRequisiciones_SelectedIndexChanged">
+
+                    <Columns>
+                        <asp:CommandField ShowSelectButton="True" SelectText="Seleccionar" />
+                        <asp:BoundField DataField="id_Requisicion" HeaderText="ID" />
+                        <asp:BoundField DataField="Solicitante" HeaderText="Solicitante" />
+                        <asp:BoundField DataField="Descripcion" HeaderText="Descripción" />
+                        <asp:BoundField DataField="CantidadSolicitada" HeaderText="Cantidad" />
+                        <asp:BoundField DataField="Monto" HeaderText="Monto" DataFormatString="₡{0:N0}" />
+                        <asp:BoundField DataField="Prioridad" HeaderText="Prioridad" />
+                        <asp:BoundField DataField="Estado" HeaderText="Estado" />
+                    </Columns>
+                </asp:GridView>
             </div>
+
+            <!-- Panel justificación -->
+            <div class="panel">
+                <strong>Justificación:</strong><br /><br />
+                <asp:TextBox ID="txtJustificacion" runat="server"
+                    CssClass="txtJustificacion"
+                    TextMode="MultiLine"
+                    Placeholder="Ingrese la justificación..." />
+            </div>
+
+            <!-- Panel botones -->
+            <div class="panel" style="display:flex; gap:20px; justify-content:center;">
+                <asp:Button ID="btnAprobar" runat="server"
+                    CssClass="btn"
+                    Text="Aprobar"
+                    OnClick="btnAprobar_Click" />
+
+                <asp:Button ID="btnDenegar" runat="server"
+                    CssClass="btn"
+                    Text="Denegar"
+                    OnClick="btnDenegar_Click" />
+            </div>
+
+            <!-- Resultado -->
+            <asp:Label ID="lblResultados" runat="server" CssClass="resultado" />
+
+            <!-- Botón volver -->
+            <asp:Button ID="Button1" runat="server"
+                CssClass="boton-volver"
+                Text="⇦ Volver"
+                PostBackUrl="Inicio_Financiero.aspx" />
+
         </div>
-    </form>
+    </div>
+
+</form>
 </body>
 </html>
