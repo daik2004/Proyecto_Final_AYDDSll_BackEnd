@@ -1,208 +1,114 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Informacion_Jefe.aspx.cs" Inherits="Proyecto_Final_Diseño_.Informacion_Jefe" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true"
+    CodeBehind="Informacion_Jefe.aspx.cs"
+    Inherits="Proyecto_Final_Diseño_.Informacion_Jefe" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Información de Reportes</title>
-    <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: #4D6C8B;
-        }
+<title>Información de Reportes</title>
 
-        body {
-            display: flex;
-            flex-direction: column;
-        }
+<style>
+body, html {
+    margin:0; padding:0; height:100%;
+    font-family:Arial; background:#4D6C8B;
+}
+.barra-superior {
+    height:80px; background:#89C4F4;
+    display:flex; justify-content:center; align-items:center;
+    font-size:36px; font-weight:bold;
+}
+.menu-lateral {
+    width:170px; float:left;
+    background:#cde8f7;
+    height:calc(100vh - 80px);
+    padding-top:30px;
+}
+.menu-lateral .img-btn {
+    display:block; margin:0 auto 20px;
+}
+.contenido-wrap {
+    margin-left:170px; padding:20px;
+}
+.panel {
+    background:#D9D9D9;
+    padding:25px; border:3px solid #7A8A99;
+}
+.tabla {
+    width:100%; border-collapse:collapse;
+    font-size:18px; text-align:center;
+}
+.tabla th {
+    border-bottom:3px solid #7A8A99;
+    padding:12px;
+}
+.tabla td {
+    border-bottom:2px solid #b5b5b5;
+    padding:10px;
+}
 
-        form {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
+.estado-pendiente { background:#FFD800; font-weight:bold; }
+.estado-aprobada { background:#00C853; color:white; font-weight:bold; }
+.estado-rechazada { background:#D50000; color:white; font-weight:bold; }
 
-        .barra-superior {
-            height: 60px;
-            background-color: #89C4F4;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            font-weight: bold;
-            color: #2C3E50;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-
-        .contenedor {
-            flex: 1;
-            display: flex;
-            overflow: hidden;
-        }
-
-
-
-        .contenido {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-            overflow-x: auto;
-        }
-
-        .panel {
-            background-color: #fff;
-            padding: 20px;
-            width: 100%;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            margin-bottom: 20px;
-        }
-
-        .tabla {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: center;
-        }
-
-            .tabla th, .tabla td {
-                padding: 12px;
-                font-size: 16px;
-                border-bottom: 1px solid #ccc;
-            }
-
-            .tabla th {
-                background-color: #f0f0f0;
-                color: #2C3E50;
-                font-weight: bold;
-            }
-
-        .estado {
-            padding: 5px 10px;
-            font-weight: bold;
-            border-radius: 8px;
-            display: inline-block;
-            color: #fff;
-        }
-
-        .estado-procesando {
-            background-color: #FFCC00;
-            color: #2C3E50;
-        }
-
-        .estado-aceptada {
-            background-color: #2ECC71;
-        }
-
-        .estado-rechazada {
-            background-color: #E74C3C;
-        }
-
-        .boton-volver {
-            margin: 20px auto; /* Centra el botón horizontalmente */
-            display: block; /* Necesario para que el margin auto funcione */
-            width: 200px;
-            height: 45px;
-            background-color: #FFCC00;
-            border: none;
-            font-size: 20px;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-            .boton-volver:hover {
-                background-color: #e6b800;
-                transform: scale(1.03);
-            }
-
-        /* Scroll horizontal en tabla si es necesario */
-        .scroll-tabla {
-            overflow-x: auto;
-        }
-
-
-        .filtro {
-            margin-top: 20px;
-            font-size: 18px;
-        }
-
-            .filtro select {
-                height: 28px;
-                width: 220px;
-                font-size: 16px;
-            }
-
-        .scroll-tabla {
-            overflow-x: auto;
-        }
-
-        .botones-aceptar-denegar {
-            display: flex;
-            gap: 20px;
-        }
-
-            .botones-aceptar-denegar asp\:ImageButton {
-                width: 100px;
-                height: 36px;
-            }
-    </style>
+.boton-volver {
+    margin-top:25px; width:160px; height:60px;
+    background:#FFCC00; font-size:30px; font-weight:bold;
+    border:none; cursor:pointer;
+}
+</style>
 </head>
+
 <body>
-    <form id="form1" runat="server">
-        <div class="barra-superior">Información de Reportes</div>
+<form runat="server">
 
+<div class="barra-superior">Información de Reportes</div>
 
+<div class="menu-lateral">
+    <asp:ImageButton ID="ImageButton1" runat="server"
+        ImageUrl="~/imagenes/fotos/Solicitudes.png"
+        Height="47px" Width="132px" CssClass="img-btn" />
 
-        <div class="contenido">
-            <div class="panel scroll-tabla">
-                <table class="tabla">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Categoría</th>
-                            <th>Unidad de medida</th>
-                            <th>Cantidad Solicitada</th>
-                            <th>Descripción</th>
-                            <th>Prioridad</th>
-                            <th>Estado</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>#123</td>
-                            <td>Papelería</td>
-                            <td>Caja</td>
-                            <td>3</td>
-                            <td>Caja de hojas</td>
-                            <td>Alta</td>
-                            <td>
-                                <asp:Label ID="Label1" runat="server" CssClass="estado estado-procesando" Text="Procesando"></asp:Label></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+    <asp:ImageButton ID="ImageButton2" runat="server"
+        ImageUrl="~/imagenes/fotos/Saliir.png"
+        Height="49px" Width="132px"
+        CssClass="img-btn"
+        OnClick="ImageButton2_Click" />
+</div>
 
-            <div class="filtro">
-                Filtrar por rango de: 
-                    <asp:DropDownList ID="DropDownList1" runat="server">
-                        <asp:ListItem>₡100 000</asp:ListItem>
-                        <asp:ListItem>₡100 000 - ₡1 000 000</asp:ListItem>
-                        <asp:ListItem>+₡1 000 000</asp:ListItem>
-                    </asp:DropDownList>
-            </div>
+<div class="contenido-wrap">
+<div class="panel">
 
+<asp:GridView ID="GridView1" runat="server"
+    AutoGenerateColumns="False"
+    CssClass="tabla">
 
+<Columns>
+    <asp:BoundField DataField="id_Requisicion" HeaderText="ID" />
+    <asp:BoundField DataField="Categoria" HeaderText="Categoría" />
+    <asp:BoundField DataField="UnidadMedida" HeaderText="Unidad" />
+    <asp:BoundField DataField="CantidadSolicitada" HeaderText="Cantidad" />
+    <asp:BoundField DataField="Descripcion" HeaderText="Descripción" />
+    <asp:BoundField DataField="Monto" HeaderText="Monto" DataFormatString="{0:C}" />
 
-            <asp:Button ID="Button1" runat="server" CssClass="boton-volver" OnClick="Button1_Click" Text="⇦" />
-        </div>
+    <asp:TemplateField HeaderText="Estado">
+        <ItemTemplate>
+            <asp:Label ID="lblEstado" runat="server"
+                Text='<%# Eval("Estado") %>'></asp:Label>
+        </ItemTemplate>
+    </asp:TemplateField>
+</Columns>
 
-    </form>
-</body>
-</html>
+</asp:GridView>
 
+</div>
+
+<asp:Button ID="Button1" runat="server"
+    CssClass="boton-volver"
+    Text="⇦ Volver"
+    OnClick="Button1_Click" />
+
+</div>
+
+</form>
 </body>
 </html>
