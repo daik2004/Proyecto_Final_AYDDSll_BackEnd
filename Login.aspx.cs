@@ -55,10 +55,16 @@ namespace Proyecto_Final_Diseño_
 					else if (rol == "Aprobador Jefe")
 						Response.Redirect("~/Jefe/Jefe_Inicio.aspx");
 
-					else if (rol == "Aprobador Financiero")
+					else if (rol == "Aprobador Financiero 1")
 						Response.Redirect("~/Financiero/Inicio_Financiero.aspx");
 
-					else
+                    else if (rol == "Aprobador Financiero 2")
+                        Response.Redirect("~/Financiero/Inicio_Financiero.aspx");
+
+                    else if (rol == "Aprobador Financiero 3")
+                        Response.Redirect("~/Financiero/Inicio_Financiero.aspx");
+
+                    else
 						lb_mensaje.Text = "Rol no autorizado.";
 				}
 				else
