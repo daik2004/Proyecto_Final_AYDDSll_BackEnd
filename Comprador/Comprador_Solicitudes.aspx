@@ -5,196 +5,199 @@
 <head runat="server">
     <title>Solicitudes</title>
     <style>
+
         body {
             margin: 0;
-            padding: 0;
             font-family: Arial, sans-serif;
             background-color: #4D6C8B;
+            height: 100vh;
             display: flex;
             flex-direction: column;
-            height: 100vh;
         }
 
-        /* Barra superior */
-        .auto-style2 {
-            height: 8vh;
-            min-height: 50px;
+        /* HEADER */
+        .header {
+            height: 70px;
             background-color: #89C4F4;
             display: flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
-        }
-
-        .auto-style4 {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #fff;
-        }
-
-        /* Contenedor principal */
-        .main-container {
-            flex: 1;
-            display: flex;
-            overflow: hidden;
-        }
-
-
-
-        /* Panel de contenido */
-        #Panel1 {
-            flex: 1;
-            background-color: #4D6C8B;
-            padding: 40px;
-            display: grid;
-            grid-template-columns: 1fr 1fr; /* dos columnas iguales */
-            grid-row-gap: 25px;
-            grid-column-gap: 30px;
             color: white;
+            font-size: 26px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* CONTENEDOR */
+        .contenedor {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            background-color: #4D6C8B;
+            width: 100%;
+            max-width: 900px;
+            padding: 40px;
+            border-radius: 12px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px 30px;
+            color: white;
+        }
+
+        .seccion {
+            grid-column: span 2;
+            font-size: 20px;
+            font-weight: bold;
+            border-bottom: 2px solid #FFCC00;
+            padding-bottom: 6px;
+            margin-bottom: 10px;
         }
 
         label {
-            display: block;
-            font-size: 1.1rem;
             font-weight: bold;
             margin-bottom: 6px;
-            color: white;
+            display: block;
         }
 
         select, input[type=text], textarea {
             width: 100%;
-            height: 38px;
-            font-size: 1rem;
-            padding: 6px 10px;
+            padding: 8px 10px;
+            font-size: 15px;
             border-radius: 6px;
-            border: 1px solid #ccc;
-            margin-bottom: 15px;
-            color: black;
+            border: none;
+            outline: none;
         }
 
         textarea {
-            height: 80px;
             resize: none;
+            height: 90px;
         }
 
-        /* Botón Crear */
-        #Button1 {
+        .acciones {
             grid-column: span 2;
-            justify-self: center;
-            background-color: #FFCC00;
-            border: none;
-            font-size: 1.2rem;
-            font-weight: bold;
-            width: 200px;
-            height: 50px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-            #Button1:hover {
-                background-color: #e6b800;
-            }
-
-        .boton-volver {
-            text-align: center; /* Centra los botones horizontalmente */
+            text-align: center;
             margin-top: 20px;
         }
 
         .btn {
-            display: block; /* Hace que cada botón ocupe su propia línea */
-            width: 200px;
-            height: 45px;
-            margin: 10px auto; /* Centra horizontalmente y separa los botones */
-            background-color: #FFCC00;
-            border: none;
-            font-size: 20px;
+            width: 220px;
+            height: 50px;
+            margin: 8px;
+            font-size: 18px;
             font-weight: bold;
             border-radius: 8px;
+            border: none;
             cursor: pointer;
             transition: 0.3s;
+            background-color: #FFCC00;
         }
 
-            .btn:hover {
-                background-color: #e6b800;
-                transform: scale(1.03);
-            }
+        .btn:hover {
+            background-color: #e6b800;
+            transform: scale(1.03);
+        }
 
-        /* Scroll horizontal en tabla si es necesario */
-        .scroll-tabla {
-            overflow-x: auto;
+        .mensaje {
+            grid-column: span 2;
+            text-align: center;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        .obligatorio {
+            color: #FFD966;
+            font-size: 13px;
+            grid-column: span 2;
         }
     </style>
 </head>
+
 <body>
-    <form id="form1" runat="server">
-        <!-- Barra superior -->
-        <div class="auto-style2">
-            <span class="auto-style4">Datos del artículo o servicio solicitado</span>
+<form id="form1" runat="server">
+
+    <div class="header">
+        Nueva Requisición
+    </div>
+
+    <div class="contenedor">
+        <div class="card">
+
+            <div class="seccion">Información del artículo / servicio</div>
+
+            <div>
+                <label>Categoría</label>
+                <asp:DropDownList ID="ddlCategoria" runat="server">
+                    <asp:ListItem>Papelería</asp:ListItem>
+                    <asp:ListItem>Artículos</asp:ListItem>
+                    <asp:ListItem>Mobiliario</asp:ListItem>
+                    <asp:ListItem>Servicios</asp:ListItem>
+                </asp:DropDownList>
+            </div>
+
+            <div>
+                <label>Prioridad</label>
+                <asp:DropDownList ID="ddlPrioridad" runat="server">
+                    <asp:ListItem>Baja</asp:ListItem>
+                    <asp:ListItem>Media</asp:ListItem>
+                    <asp:ListItem>Alta</asp:ListItem>
+                    <asp:ListItem>Urgente</asp:ListItem>
+                </asp:DropDownList>
+            </div>
+
+            <div>
+                <label>Unidad de medida</label>
+                <asp:DropDownList ID="ddlUnidad" runat="server">
+                    <asp:ListItem>Unidad</asp:ListItem>
+                    <asp:ListItem>Caja</asp:ListItem>
+                    <asp:ListItem>Paquete</asp:ListItem>
+                    <asp:ListItem>Horas</asp:ListItem>
+                </asp:DropDownList>
+            </div>
+
+            <div>
+                <label>Cantidad solicitada *</label>
+                <asp:TextBox ID="txtCantidad" runat="server"></asp:TextBox>
+            </div>
+
+            <div>
+                <label>Motivo de la solicitud *</label>
+                <asp:TextBox ID="txtMotivo" runat="server"></asp:TextBox>
+            </div>
+
+            <div>
+                <label>Descripción detallada</label>
+                <asp:TextBox ID="txtDescripcion" runat="server" TextMode="MultiLine"></asp:TextBox>
+            </div>
+
+            <div class="seccion">Información económica</div>
+
+            <div>
+                <label>Monto estimado ₡ *</label>
+                <asp:TextBox ID="txtMonto" runat="server"></asp:TextBox>
+            </div>
+
+            <div class="obligatorio">
+                * Campos obligatorios
+            </div>
+
+            <div class="acciones">
+                <asp:Button ID="btnCrear" runat="server" Text="Crear Requisición"
+                    CssClass="btn" OnClick="Button1_Click" />
+
+                <asp:Button ID="btnVolver" runat="server" Text="Volver"
+                    CssClass="btn" OnClick="Button2_Click" />
+            </div>
+
+            <asp:Label ID="lblMensaje" runat="server" CssClass="mensaje"></asp:Label>
+
         </div>
+    </div>
 
-        <!-- Contenedor principal -->
-        <div class="main-container">
-            <!-- Panel de contenido -->
-            <asp:Panel ID="Panel1" runat="server" CssClass="panel-contenido">
-
-                <div class="campo">
-                    <asp:Label ID="Label1" runat="server" Text="Categoría"></asp:Label>
-                    <asp:DropDownList ID="DropDownList1" runat="server">
-                        <asp:ListItem>Papelería</asp:ListItem>
-                        <asp:ListItem>Artículos</asp:ListItem>
-                        <asp:ListItem>Mobiliario</asp:ListItem>
-                        <asp:ListItem>Servicios</asp:ListItem>
-                    </asp:DropDownList>
-                </div>
-
-                <div class="campo">
-                    <asp:Label ID="Label2" runat="server" Text="Prioridad"></asp:Label>
-                    <asp:DropDownList ID="DropDownList3" runat="server">
-                        <asp:ListItem>Baja</asp:ListItem>
-                        <asp:ListItem>Media</asp:ListItem>
-                        <asp:ListItem>Alta</asp:ListItem>
-                        <asp:ListItem>Urgente</asp:ListItem>
-                    </asp:DropDownList>
-                </div>
-
-                <div class="campo">
-                    <asp:Label ID="Label3" runat="server" Text="Unidad de medida"></asp:Label>
-                    <asp:DropDownList ID="DropDownList2" runat="server">
-                        <asp:ListItem>Unidad</asp:ListItem>
-                        <asp:ListItem>Caja</asp:ListItem>
-                        <asp:ListItem>Paquete</asp:ListItem>
-                        <asp:ListItem>Horas</asp:ListItem>
-                    </asp:DropDownList>
-                </div>
-
-                <div class="campo">
-                    <asp:Label ID="Label5" runat="server" Text="Cantidad solicitada"></asp:Label>
-                    <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
-                </div>
-
-                <div class="campo">
-                    <asp:Label ID="Label4" runat="server" Text="Motivo de solicitud"></asp:Label>
-                    <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
-                </div>
-
-                <div class="campo">
-                    <asp:Label ID="Label6" runat="server" Text="Descripción"></asp:Label>
-                    <asp:TextBox ID="TextBox3" runat="server" TextMode="MultiLine"></asp:TextBox>
-                </div>
-
-                <div class="campo">
-                    <asp:Label ID="Label7" runat="server" Text="Monto ₡"></asp:Label>
-                    <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
-                </div>
-
-                <div class="boton-volver">
-                    <asp:Button ID="Button1" runat="server" Text="Crear" OnClick="Button1_Click" CssClass="btn" />
-                    <asp:Button ID="Button2" runat="server" Text="⇦" OnClick="Button2_Click" CssClass="btn" />
-                </div>
-
-            </asp:Panel>
-        </div>
-    </form>
+</form>
 </body>
-
+</html>

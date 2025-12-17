@@ -2,227 +2,234 @@
 
 
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head runat="server">
-    <title>Gestión de Reportes</title>
-    <style>
-        body, html {
+    <title>Gestión de Reportes - Jefe</title>
+
+       <style>
+        body {
             margin: 0;
-            padding: 0;
-            height: 100%;
             font-family: Arial, sans-serif;
             background-color: #4D6C8B;
-        }
-
-        body {
+            height: 100vh;
             display: flex;
             flex-direction: column;
         }
 
-        /* Barra superior */
-        .barra-superior {
-            height: 60px;
+        .header {
+            height: 70px;
             background-color: #89C4F4;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
+            color: white;
+            font-size: 26px;
             font-weight: bold;
-            color: #2C3E50;
+            letter-spacing: 1px;
         }
 
-        /* Contenedor principal */
         .contenedor {
-            display: flex;
             flex: 1;
-            overflow: hidden;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
         }
 
-
-        /* Contenido principal */
-        .contenido {
-            flex: 1;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            overflow-x: auto;
-        }
-
-        /* Paneles */
-        .panel {
-            background-color: #fff;
-            padding: 20px;
+        .card {
+            background-color: #4D6C8B;
             width: 100%;
             max-width: 1200px;
+            padding: 40px;
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            color: white;
+        }
+
+        .seccion {
+            font-size: 20px;
+            font-weight: bold;
+            border-bottom: 2px solid #FFCC00;
+            padding-bottom: 6px;
             margin-bottom: 20px;
         }
 
-        /* Tabla de solicitudes */
-        .tabla {
+        /* GRID */
+        .gridview {
             width: 100%;
             border-collapse: collapse;
-            text-align: center;
+            background-color: white;
+            color: #333;
+            margin-bottom: 30px;
         }
 
-            .tabla th, .tabla td {
-                padding: 12px;
-                font-size: 16px;
-                border-bottom: 1px solid #ccc;
-            }
+        .gridview th {
+            background-color: #89C4F4;
+            color: white;
+            padding: 10px;
+            text-align: left;
+        }
 
-            .tabla th {
-                background-color: #f0f0f0;
-                color: #2C3E50;
-                font-weight: bold;
-            }
+        .gridview td {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
 
-        .estado {
-            padding: 5px 10px;
+        .gridview a {
+            color: #4D6C8B;
             font-weight: bold;
-            border-radius: 8px;
-            display: inline-block;
-            color: #fff;
+            text-decoration: none;
         }
 
-        .estado-procesando {
-            background-color: #FFCC00;
-            color: #2C3E50;
+        .gridview a:hover {
+            text-decoration: underline;
         }
 
-        .estado-aceptada {
-            background-color: #2ECC71;
+        /* ESTADOS */
+        .estado-pendiente {
+            color: orange;
+            font-weight: bold;
+        }
+
+        .estado-aprobada {
+            color: green;
+            font-weight: bold;
         }
 
         .estado-rechazada {
-            background-color: #E74C3C;
+            color: red;
+            font-weight: bold;
         }
 
-        /* Botones Aceptar / Denegar */
-        .botones-accion {
-            display: flex;
-            gap: 15px;
+        /* PANEL DETALLE */
+        .detalle {
+            background-color: #3E5875;
+            padding: 25px;
+            border-radius: 10px;
         }
 
-            .botones-accion asp\:ImageButton {
-                width: 120px;
-                height: 35px;
-                cursor: pointer;
-                transition: transform 0.2s, box-shadow 0.2s;
-            }
+        .detalle p {
+            margin: 8px 0;
+        }
 
-                .botones-accion asp\:ImageButton:hover {
-                    transform: scale(1.05);
-                    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
-                }
-
-        .boton-volver {
-            margin: 20px auto; /* Centra el botón horizontalmente */
-            display: block; /* Necesario para que el margin auto funcione */
-            width: 200px;
-            height: 45px;
-            background-color: #FFCC00;
+        textarea {
+            width: 100%;
+            height: 90px;
+            border-radius: 6px;
             border: none;
-            font-size: 20px;
+            padding: 8px;
+            resize: none;
+        }
+
+        .acciones {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            width: 220px;
+            height: 50px;
+            margin: 8px;
+            font-size: 18px;
             font-weight: bold;
             border-radius: 8px;
+            border: none;
             cursor: pointer;
             transition: 0.3s;
+            background-color: #FFCC00;
         }
 
-            .boton-volver:hover {
-                background-color: #e6b800;
-                transform: scale(1.03);
-            }
-
-        /* Scroll horizontal en tabla si es necesario */
-        .scroll-tabla {
-            overflow-x: auto;
+        .btn:hover {
+            background-color: #e6b800;
+            transform: scale(1.03);
         }
     </style>
 </head>
+
 <body>
-    <form id="form1" runat="server">
-        <!-- Barra superior -->
-        <div class="barra-superior">Gestión de Reportes</div>
+<form id="form1" runat="server">
 
-        <!-- Contenedor principal -->
-        <div class="contenedor">
+    <div class="header">
+        Gestión de Requisiciones
+    </div>
 
+    <div class="contenedor">
+        <div class="card">
 
-            <!-- Contenido principal -->
-            <div class="contenido">
-                <!-- Tabla de solicitudes -->
-                <div class="panel scroll-tabla">
-                    <table class="tabla">
-                        <thead>
-                            <tr>
-                                <th>Id Solicitante</th>
-                                <th>Descripción</th>
-                                <th>Cantidad</th>
-                                <th>Monto</th>
-                                <th>Prioridad</th>
-                                <th>Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>#123</td>
-                                <td>Hojas</td>
-                                <td>3</td>
-                                <td>₡10 000</td>
-                                <td>Baja</td>
-                                <td>
-                                    <asp:Label ID="Label3" runat="server" CssClass="estado estado-procesando" Text="Procesando"></asp:Label></td>
-                            </tr>
-                            <tr>
-                                <td>#236</td>
-                                <td>Impresora</td>
-                                <td>1</td>
-                                <td>₡100 000</td>
-                                <td>Baja</td>
-                                <td>
-                                    <asp:Label ID="Label4" runat="server" CssClass="estado estado-procesando" Text="Procesando"></asp:Label></td>
-                            </tr>
-                            <tr>
-                                <td>#452</td>
-                                <td>PC Gamer</td>
-                                <td>1</td>
-                                <td>₡1 000 000</td>
-                                <td>Baja</td>
-                                <td>
-                                    <asp:Label ID="Label5" runat="server" CssClass="estado estado-procesando" Text="Procesando"></asp:Label></td>
-                            </tr>
-                            <tr>
-                                <td>#326</td>
-                                <td>Escritorio</td>
-                                <td>1</td>
-                                <td>₡125 000</td>
-                                <td>Baja</td>
-                                <td>
-                                    <asp:Label ID="Label6" runat="server" CssClass="estado estado-procesando" Text="Procesando"></asp:Label></td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <div class="seccion">Requisiciones pendientes de aprobación</div>
+
+            <!-- TABLA -->
+            <asp:GridView ID="gvRequisiciones" runat="server"
+                CssClass="gridview"
+                AutoGenerateColumns="False"
+                DataKeyNames="id_Requisicion"
+                OnSelectedIndexChanged="gvRequisiciones_SelectedIndexChanged">
+
+                <Columns>
+
+                    <asp:CommandField ShowSelectButton="true" SelectText="Ver" />
+
+                    <asp:BoundField DataField="id_Requisicion" HeaderText="ID" />
+
+                    <asp:BoundField DataField="Fecha_Creacion"
+                        HeaderText="Fecha"
+                        DataFormatString="{0:dd/MM/yyyy}" />
+
+                    <asp:BoundField DataField="Categoria" HeaderText="Categoría" />
+
+                    <asp:BoundField DataField="Descripcion" HeaderText="Descripción" />
+
+                    <asp:BoundField DataField="CantidadSolicitada" HeaderText="Cantidad" />
+
+                    <asp:BoundField DataField="UnidadMedida" HeaderText="Unidad" />
+
+                    <asp:BoundField DataField="MotivoSolicitud" HeaderText="Motivo" />
+
+                    <asp:BoundField DataField="Monto"
+                        HeaderText="Monto"
+                        DataFormatString="₡{0:N0}" />
+
+                    <asp:TemplateField HeaderText="Estado">
+                        <ItemTemplate>
+                            <asp:Label ID="lblEstadoGrid" runat="server"
+                                Text='<%# Eval("Estado") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
+                </Columns>
+            </asp:GridView>
+
+            <!-- DETALLE -->
+            <asp:Panel ID="pnlDetalle" runat="server" CssClass="detalle" Visible="false">
+
+                <div class="seccion">Decisión del jefe</div>
+
+                <p><strong>ID Requisición:</strong>
+                    <asp:Label ID="lblId" runat="server" /></p>
+
+                <p><strong>Monto:</strong>
+                    <asp:Label ID="lblMonto" runat="server" /></p>
+
+                <p><strong>Observaciones:</strong></p>
+                <asp:TextBox ID="txtObservaciones" runat="server"
+                    TextMode="MultiLine"></asp:TextBox>
+
+                <div class="acciones">
+                    <asp:Button ID="btnAprobar" runat="server"
+                        Text="Aprobar"
+                        CssClass="btn"
+                        OnClick="btnAprobar_Click" />
+
+                    <asp:Button ID="btnRechazar" runat="server"
+                        Text="Rechazar"
+                        CssClass="btn"
+                        OnClick="btnRechazar_Click" />
                 </div>
 
-                <!-- Justificación -->
-                <div class="panel">
-                    <strong>Justificación:</strong><br />
-                    Ej. Esta solicitud es aprobada/denegada debido a que...
-                </div>
+            </asp:Panel>
 
-                <div class="panel" style="display: flex; gap: 20px;">
-                    <asp:ImageButton ID="ImageButton3" runat="server" Height="40px" ImageUrl="~/imagenes/fotos/Aceptar.png" Width="162px" />
-                    <asp:ImageButton ID="ImageButton4" runat="server" Height="38px" ImageUrl="~/imagenes/fotos/Denegar.png" Width="162px" />
-                </div>
-
-
-                <!-- Botón volver -->
-                <asp:Button ID="Button1" runat="server" CssClass="boton-volver" OnClick="Button1_Click" Text="⇦" />
-            </div>
         </div>
-    </form>
+    </div>
+
+</form>
 </body>
 </html>
