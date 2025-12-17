@@ -24,13 +24,13 @@ namespace Proyecto_Final_Diseño_
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// TextBox12 control.
+        /// ddlUsuarios control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox12;
+        protected global::System.Web.UI.WebControls.DropDownList ddlUsuarios;
 
         /// <summary>
         /// DropDownList1 control.

@@ -44,23 +44,23 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.25);
         }
 
-        .card h2 {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #345830;
-            font-size: 1.6rem;
-        }
+            .card h2 {
+                text-align: center;
+                margin-bottom: 30px;
+                color: #345830;
+                font-size: 1.6rem;
+            }
 
         .form-group {
             margin-bottom: 22px;
         }
 
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #2E4053;
-        }
+            .form-group label {
+                display: block;
+                font-weight: 600;
+                margin-bottom: 8px;
+                color: #2E4053;
+            }
 
         .input-text, .input-select, .input-textarea {
             width: 100%;
@@ -96,17 +96,17 @@
             background-color: #FFCC00;
         }
 
-        .btn-primario:hover {
-            background-color: #e6b800;
-        }
+            .btn-primario:hover {
+                background-color: #e6b800;
+            }
 
         .btn-secundario {
             background-color: #dfe6e9;
         }
 
-        .btn-secundario:hover {
-            background-color: #b2bec3;
-        }
+            .btn-secundario:hover {
+                background-color: #b2bec3;
+            }
     </style>
 </head>
 
@@ -124,7 +124,11 @@
 
                 <div class="form-group">
                     <label for="TextBox12">ID del Usuario</label>
-                    <asp:TextBox ID="TextBox12" runat="server" CssClass="input-text" />
+                    <asp:DropDownList
+                        ID="ddlUsuarios"
+                        runat="server"
+                        CssClass="input-select">
+                    </asp:DropDownList>
                 </div>
 
                 <div class="form-group">

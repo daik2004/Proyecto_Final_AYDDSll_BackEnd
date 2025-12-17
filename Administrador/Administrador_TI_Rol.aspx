@@ -45,7 +45,7 @@
             margin-bottom: 8px;
         }
 
-        .input-text, .input-select {
+        .input-select {
             padding: 10px;
             border-radius: 8px;
             border: 1px solid #ccc;
@@ -86,7 +86,7 @@
         }
     </style>
 
-    <script>
+    <script type="text/javascript">
         function mostrarRolFinanciero() {
             var rol = document.getElementById('<%= DropDownList1.ClientID %>').value;
             var grupo = document.getElementById('grupoRolFinanciero');
@@ -101,57 +101,68 @@
 </head>
 
 <body>
-<form id="form1" runat="server">
+    <form id="form1" runat="server">
 
-    <div class="barra-superior">Definir Rol</div>
+        <div class="barra-superior">Definir Rol</div>
 
-    <div class="panel-mejorado">
+        <div class="panel-mejorado">
 
-        <!-- ID del usuario -->
-        <div class="form-group">
-            <label>ID Usuario</label>
-            <asp:TextBox ID="TextBox12" runat="server" CssClass="input-text" />
+            <!-- Usuario -->
+            <div class="form-group">
+                <label>ID Usuario</label>
+                <asp:DropDownList
+                    ID="ddlUsuarios"
+                    runat="server"
+                    CssClass="input-select">
+                </asp:DropDownList>
+            </div>
+
+            <!-- Rol principal -->
+            <div class="form-group">
+                <label>Rol</label>
+                <asp:DropDownList
+                    ID="DropDownList1"
+                    runat="server"
+                    CssClass="input-select"
+                    onchange="mostrarRolFinanciero()">
+
+                    <asp:ListItem Text="-- Seleccione --" Value="" />
+                    <asp:ListItem Text="Administrador" Value="Administrador" />
+                    <asp:ListItem Text="Comprador" Value="Comprador" />
+                    <asp:ListItem Text="Financiero" Value="Financiero" />
+                </asp:DropDownList>
+            </div>
+
+            <!-- Rol financiero -->
+            <div class="form-group" id="grupoRolFinanciero">
+                <label>Rol Financiero</label>
+                <asp:DropDownList
+                    ID="DropDownList2"
+                    runat="server"
+                    CssClass="input-select">
+                    <asp:ListItem>Aprobador Financiero 1</asp:ListItem>
+                    <asp:ListItem>Aprobador Financiero 2</asp:ListItem>
+                    <asp:ListItem>Aprobador Financiero 3</asp:ListItem>
+                    <asp:ListItem>Aprobador Jefe</asp:ListItem>
+                </asp:DropDownList>
+
+                <span class="info-text">
+                    Solo para usuarios con rol Financiero
+                </span>
+            </div>
+
+            <!-- Botón -->
+            <div class="botones-panel">
+                <asp:Button
+                    ID="Button1"
+                    runat="server"
+                    Text="Asignar"
+                    CssClass="btn-accion"
+                    OnClick="Button1_Click" />
+            </div>
+
         </div>
 
-        <!-- Rol principal -->
-        <div class="form-group">
-            <label>Rol</label>
-            <asp:DropDownList ID="DropDownList1"
-                runat="server"
-                CssClass="input-select"
-                onchange="mostrarRolFinanciero()">
-
-                <asp:ListItem Text="-- Seleccione --" Value="" />
-                <asp:ListItem Text="Administrador" Value="Administrador" />
-                <asp:ListItem Text="Comprador" Value="Comprador" />
-                <asp:ListItem Text="Financiero" Value="Financiero" />
-            </asp:DropDownList>
-        </div>
-
-        <!-- Rol financiero (solo si es Financiero) -->
-        <div class="form-group" id="grupoRolFinanciero">
-            <label>Rol Financiero</label>
-            <asp:DropDownList ID="DropDownList2" runat="server" CssClass="input-select">
-                <asp:ListItem Text="Aprobador Financiero 1" />
-                <asp:ListItem Text="Aprobador Financiero 2" />
-                <asp:ListItem Text="Aprobador Financiero 3" />
-                <asp:ListItem Text="Aprobador Jefe" />
-            </asp:DropDownList>
-            <span class="info-text">
-                Solo para usuarios con rol Financiero
-            </span>
-        </div>
-
-        <!-- Botones -->
-        <div class="botones-panel">
-            <asp:Button ID="Button1"
-                runat="server"
-                Text="Asignar"
-                CssClass="btn-accion" />
-
-   
-
-    </div>
-</form>
+    </form>
 </body>
 </html>

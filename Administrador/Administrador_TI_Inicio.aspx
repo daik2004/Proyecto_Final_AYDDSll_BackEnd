@@ -125,7 +125,7 @@
                 <asp:Panel ID="Panel1" runat="server" CssClass="panel-botones">
                     <asp:ImageButton ID="ImageButton3" runat="server" ImageUrl="~/imagenes/fotos/Definir Usuario.png" OnClick="ImageButton3_Click1" />
                     <asp:ImageButton ID="ImageButton4" runat="server" ImageUrl="~/imagenes/fotos/Definir estado.png" OnClick="ImageButton4_Click" />
-                    <asp:ImageButton ID="ImageButton5" runat="server" ImageUrl="~/imagenes/fotos/Definir Rol.png" OnClick="ImageButton5_Click" />
+                    
                 </asp:Panel>
             </div>
         </div>
