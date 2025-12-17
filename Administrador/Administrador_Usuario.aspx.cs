@@ -76,14 +76,14 @@ namespace Proyecto_Final_Diseño_
                     cmd.ExecuteNonQuery();
                 }
 
-                lblMensaje.Text = "✅ Usuario creado correctamente";
+                lblMensaje.Text = " Usuario creado correctamente";
                 lblMensaje.ForeColor = System.Drawing.Color.Green;
 
                 LimpiarCampos();
             }
             catch (SqlException ex)
             {
-                lblMensaje.Text = "⚠ Error: usuario o cédula duplicada";
+                lblMensaje.Text = " Error: usuario o cédula duplicada";
                 lblMensaje.ForeColor = System.Drawing.Color.Red;
             }
         }
